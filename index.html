@@ -20,43 +20,122 @@ body {
   margin-bottom: 5em;
   font-size:     1.5em;
 }
-/* cm is the text editor, Code Mirror */
-.cm {
-  border:  2px solid blue;
-  display: block;
-  width:   50%;
+
+.challenge {
+   border: 2px solid #555;
+   display : -webkit-flex;
+   display : flex;
+
+	-webkit-align-items: center;
+	align-items: center;
+
+  -webkit-justify-content: center;
+  justify-content: center;
+
+  -webkit-flex-direction: row;
+  flex-direction: row;
+
+  -webkit-align-items: stretch;
+  -ms-flex-align: stretch;
+  align-items: stretch;
+}
+
+.challenge textarea {
+  display: inherit;
+  margin: 0;
+}
+.challenge .test-results {
+  width:   35%;
+  background-color: #f5f5f5;
+  margin:           0;      /* override browser default */
+  padding:          0.5em;  /* override browser default */
+  list-style-type:  none;   /* override browser default */
+}
+.test-results .result {
+  padding:     0.3em;
+  color:       #f5f5f5;
+  font-family: sans-serif;
+}
+.test-results .result + .result {
+  margin-top: 3px; /*#f5f5f5;*/
+}
+.test-results .pass {
+  background-color: #90a959;
+}
+.test-results .fail {
+  background: #8f5536;
 }
 </style>
 
 Some text before.
 
-<textarea class="cm">a = "hello"
-b = "world"
-"#{a} #{b}"</textarea>
+<div class="challenge">
+<textarea># Modify the lambda to return 10 more than the square of the input
+-&gt;(a) { 5 + a }
+</textarea>
+<ul class="test-results"></ul>
+</div>
 
 Some text between.
 
-<textarea class="cm">fn = -&gt;(a) { a*a }
-fn[1]</textarea>
+<div class="challenge">
+<textarea>a = "hello"
+b = "world"
+"#{a} #{b}"</textarea>
+<ul class="test-results"></ul>
+</div>
 
 Some text after.
 
 
 <script type="text/javascript">
-var editorDoms = document.querySelectorAll('.cm')
-for(dom of editorDoms) {
+var challenges = document.querySelectorAll('.challenge')
+challenges.forEach(function(challengeDom) {
+  const cmDom = challengeDom.querySelector('textarea')
+
+  // Options:
   // keyMap   - vim/emacs/sublime, but you have to explicitly load the keymap code
   // exraKeys - additional keybindings
-  dom.cm = CodeMirror.fromTextArea(dom, {
-    mode:            "ruby",
-    lineNumbers:     true,
-    theme:           'base16-light',
+
+  // Extensions:
+  //   runmode     lets you run a mode against the code (this is for parsing / syntax checking?)
+  //   colorize    lets you syntax highlight code snippets
+  //   fullscreen
+  //   panel       seems to only be above/below
+  cmDom.cm = CodeMirror.fromTextArea(cmDom, {
+    mode:        "ruby",
+    lineNumbers: true,
+    theme:       'base16-light',
   })
-  dom.cm.on('changes', function(cm, change) {
-    let ruby   = cm.getValue()
-    let result = Opal.eval(ruby)
-    console.log(result)
-  })
-}
+  cmDom.cm.setSize({height: '100%'})
+  cmDom.cm.on('changes', (cm, change) => testAnswer(cm))
+  testAnswer(cmDom.cm)
+
+  function testAnswer(cm) {
+    const ruby        = cm.getValue()
+    const evaluatedTo = Opal.eval(ruby)
+    const tests       = [
+      {name: 'Test 1', inputs: [ 0], output:  10},
+      {name: 'Test 2', inputs: [ 1], output:  11},
+      {name: 'Test 3', inputs: [ 2], output:  14},
+      {name: 'Test 4', inputs: [10], output: 110},
+    ]
+
+    const resultsDom     = challengeDom.querySelector('.test-results')
+    while (resultsDom.firstChild)
+      resultsDom.removeChild(resultsDom.firstChild)
+
+    tests.forEach(test => {
+      const actualOutput  = evaluatedTo(...test.inputs)
+      const resultDom     = document.createElement('li')
+      resultDom.innerText = `${test.name}: Expected ${test.output}, Actual ${actualOutput}`
+      resultsDom.appendChild(resultDom)
+      if(actualOutput === test.output)
+        resultDom.classList.add('result', 'pass')
+      else
+        resultDom.classList.add('result', 'fail')
+    })
+  }
+})
 </script>
 
