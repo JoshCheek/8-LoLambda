@@ -1,0 +1,25 @@
+<!doctype html>
+
+<!-- METADATA -->
+<meta charset="utf-8">
+<title>JS and Ruby in the browser (template)</title>
+
+<!-- TOSS SOME STYLES UP IN HERE! -->
+<style>
+body {
+  margin:        3em;
+  margin-bottom: 5em;
+  font-size:     1.5em;
+}
+</style>
+
+<script src="opal_app.js" type="text/javascript"></script>
+
+<div id="output"></div>
+
+<script type="text/javascript">
+let out = document.querySelector('#output')
+out.innerHTML = "a"
+eval(Opal.compile("puts 'wow'"))
+</script>
+
