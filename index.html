@@ -4,6 +4,15 @@
 <meta charset="utf-8">
 <title>JS and Ruby in the browser (template)</title>
 
+<!-- LOAD DEPENDENCIES -->
+<script src="opal_app.js" type="text/javascript"></script>
+
+<script src="bower_components/codemirror/lib/codemirror.js"></script>
+<script src="bower_components/codemirror/mode/ruby/ruby.js"></script>
+<link rel="stylesheet" type="text/css" href="bower_components/codemirror/lib/codemirror.css">
+<link rel=stylesheet href="bower_components/codemirror/theme/base16-light.css">
+
+
 <!-- TOSS SOME STYLES UP IN HERE! -->
 <style>
 body {
@@ -11,15 +20,43 @@ body {
   margin-bottom: 5em;
   font-size:     1.5em;
 }
+/* cm is the text editor, Code Mirror */
+.cm {
+  border:  2px solid blue;
+  display: block;
+  width:   50%;
+}
 </style>
 
-<script src="opal_app.js" type="text/javascript"></script>
+Some text before.
 
-<div id="output"></div>
+<textarea class="cm">a = "hello"
+b = "world"
+"#{a} #{b}"</textarea>
+
+Some text between.
+
+<textarea class="cm">fn = -&gt;(a) { a*a }
+fn[1]</textarea>
+
+Some text after.
+
 
 <script type="text/javascript">
-let out = document.querySelector('#output')
-out.innerHTML = "a"
-eval(Opal.compile("puts 'wow'"))
+var editorDoms = document.querySelectorAll('.cm')
+for(dom of editorDoms) {
+  // keyMap   - vim/emacs/sublime, but you have to explicitly load the keymap code
+  // exraKeys - additional keybindings
+  dom.cm = CodeMirror.fromTextArea(dom, {
+    mode:            "ruby",
+    lineNumbers:     true,
+    theme:           'base16-light',
+  })
+  dom.cm.on('changes', function(cm, change) {
+    let ruby   = cm.getValue()
+    let result = Opal.eval(ruby)
+    console.log(result)
+  })
+}
 </script>
 

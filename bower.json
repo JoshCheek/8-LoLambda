@@ -1,0 +1,22 @@
+{
+  "name": "some-name",
+  "description": "some description",
+  "main": "index.js",
+  "authors": [
+    "Josh Cheek <josh.cheek@gmail.com>"
+  ],
+  "license": "ISC",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "tmp"
+  ],
+  "dependencies": {
+    "codemirror": "^5.22.2"
+  }
+}

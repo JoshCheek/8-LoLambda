@@ -3,3 +3,9 @@ tmp
 
 # Opal compiled into a file
 opal_app.js
+
+# JavaScript deps
+node_modules
+
+# JavaScript browser deps
+bower_components

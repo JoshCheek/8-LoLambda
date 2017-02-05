@@ -1,0 +1,16 @@
+{
+  "name": "some-name",
+  "version": "1.0.0",
+  "description": "some description",
+  "main": "index.js",
+  "scripts": {
+    "bower": "bower install"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {},
+  "dependencies": {
+    "bower": "^1.8.0"
+  }
+}
