@@ -1,0 +1,43 @@
+/* Coolors Exported Palette - coolors.co/ead38c-d6977a-af705f-66432b-442c2e */
+
+/* RGB */
+$color1: rgba(234, 211, 140, 1);
+$color2: rgba(214, 151, 122, 1);
+$color3: rgba(175, 112, 95, 1);
+$color4: rgba(102, 67, 43, 1);
+$color5: rgba(68, 44, 46, 1);
+
+body
+  // color:            $color5
+  // background-color: $color3
+
+  // color:            $color4
+  // background-color: $color2
+
+  color:            $color4
+  background-color: $color1
+
+// there's a little nub at the bottom and I can't figure out where it's coming from -.-
+.CodeMirror-gutters .CodeMirror-gutter
+  background-color: lighten($color1, 10%)
+
+.App
+  height:           100%
+  display:          flex
+
+.Navbar
+  color:            $color1
+  background-color: $color4
+  padding:          1.5em
+
+.PageLink
+  display: block
+  & + .PageLink
+    margin-top:       0.5em
+
+.Page
+  flex-grow:        1
+  padding:          1em
+  justify-content:  center
+  flex-direction:   row
+  align-items:      stretch
