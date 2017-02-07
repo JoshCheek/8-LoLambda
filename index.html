@@ -9,6 +9,7 @@
 
 <script src="bower_components/codemirror/lib/codemirror.js"></script>
 <script src="bower_components/codemirror/mode/ruby/ruby.js"></script>
+<script src="bower_components/codemirror/mode/javascript/javascript.js"></script>
 <link rel="stylesheet" type="text/css" href="bower_components/codemirror/lib/codemirror.css">
 <link rel="stylesheet" href="bower_components/codemirror/theme/base16-light.css">
 
@@ -65,27 +66,176 @@ body {
 .test-results .fail {
   background: #8f5536;
 }
+.cm-my-custom-style {
+  border: 1px solid blue;
+}
+.CodeMirror span.cm-var-number-0 {
+  color: #A00
+}
+.CodeMirror span.cm-var-number-1 {
+  color: #0A0
+}
+.CodeMirror span.cm-var-number-2 {
+  color: #00A
+}
+.CodeMirror span.cm-var-number-3 {
+  color: #AA0
+}
+.CodeMirror span.cm-var-number-4 {
+  color: #0AA
+}
+.cm-def {
+  text-decoration: underline;
+}
 </style>
 
 Some text before.
 
 <div class="challenge">
-<textarea># Modify the lambda to return 10 more than the square of the input
--&gt;(a) { 5 + a }
+<textarea>
+(a =&gt; (a =&gt; a(a))(a))
+//(car =&gt;( cdr =&gt;( cons =&gt;(
+// _or =&gt;( _and =&gt;( _if =&gt;( _true =&gt;( _false =&gt;(
+// progression =&gt;( noop =&gt;( print_num =&gt;( y_combinator =&gt;(
+// succ =&gt;( pred =&gt;( is_zero =&gt;(
+// zero =&gt;( one =&gt;( two =&gt;( three =&gt;( four =&gt;( five =&gt;( six =&gt;( seven =&gt;( eight =&gt;( nine =&gt;( ten =&gt;
+//
+//  // -----  This code recursively counts down from 10  -----
+//  y_combinator(
+//    (recur =&gt; num =&gt;
+//      progression
+//        (print_num(num))
+//        (_if (is_zero(num))
+//             (noop)
+//             (_ =&gt; recur(pred(num))))))
+//    (ten) // &lt;-- See? We call it with 10!
+//
+//// ==========  All the support code we need in order to pull it off  ==========
+//
+//// -----  Church Numerals  -----
+//)(succ(nine)
+//))(succ(eight)
+//))(succ(seven)
+//))(succ(six)
+//))(succ(five)
+//))(succ(four)
+//))(succ(three)
+//))(succ(two)
+//))(succ(one)
+//))(succ(zero)
+//))(fn =&gt; arg =&gt; arg
+//))(n =&gt; n(_ =&gt; _false)(_true)
+//
+//// this is the integer predecessor function,
+//// I made it up, IDK how you're actually supposed to do it
+//))(n1 =&gt; fn =&gt; arg =&gt;
+//    (state =&gt; delayedFn =&gt;
+//        cdr(n1(delayedFn)(state)))
+//      (cons(_false)(arg))// initial state
+//      ((state =&gt;
+//        (already_skipped =&gt; arg =&gt;
+//            _if (already_skipped(state))
+//                (_=&gt; cons(_true)(fn(arg(state))))
+//                (_=&gt; cons(_true)(arg(state))))
+//        (car)
+//        (cdr)))
+//))(num =&gt; fn =&gt; arg =&gt; num(fn)(fn(arg))
+//
+//// -----  Miscellaneous  -----
+//// The y combinator ^_^
+//))((y =&gt; fn =&gt; n =&gt; fn(y(y)(fn))(n))
+//   (y =&gt; fn =&gt; n =&gt; fn(y(y)(fn))(n))
+//
+//// print_num, the one place we cheat
+//))(num =&gt; console.log(num(n =&gt; n+1)(0)) || num
+//))(_ =&gt; _
+//))(first =&gt; second =&gt; second
+//
+//// -----  true, false, boolean operators, if statements, etc  -----
+//))(true_branch =&gt; false_branch =&gt; false_branch
+//))(true_branch =&gt; false_branch =&gt; true_branch
+//))(bool =&gt; true_branch =&gt; false_branch =&gt;
+//     bool(true_branch)(false_branch)(bool)
+//))(bool1 =&gt; bool2 =&gt; bool1(bool2)(bool1)
+//))(bool1 =&gt; bool2 =&gt; bool1(bool1)(bool2)
+//
+//// -----  linked lists  -----
+//))(first =&gt; second =&gt; fn =&gt; fn(first)(second)
+//))(cons_cell =&gt; cons_cell(first =&gt; second =&gt; second)
+//))(cons_cell =&gt; cons_cell(first =&gt; second =&gt; first)
+//)
 </textarea>
 <ul class="test-results"></ul>
 </div>
 
 Some text between.
 
-<div class="challenge">
-<textarea>a = "hello"
-b = "world"
-"#{a} #{b}"</textarea>
-<ul class="test-results"></ul>
-</div>
 
-Some text after.
+<script type="text/javascript">
+"use strict"
+// Heavily influenced by CodeMirror's html mixed mode
+
+CodeMirror.defineMode("colouredVarTokens", function (config, parserConfig) {
+  var jsMode = CodeMirror.getMode(config, {name: "javascript", jsMode: true})
+  var i = 0
+
+  function colouredVarTokens(stream, state) {
+    let style     = jsMode.token(stream, state.jsState)
+    let token     = stream.current()
+    let scopes    = state.scopes
+    let crntScope = scopes[scopes.length-1]
+    let addClass  = ""
+    if(style === undefined && token === "(") {
+      scopes.push({})
+      i++
+    } else if(style === "operator" && token === "=>") {
+      // scopes.push({})
+      // i++
+    } else if(style === undefined && token === ")") {
+      scopes.pop()
+      i--
+    } else if(style === "def") {
+      crntScope[token] = " var-number-"+i
+      addClass += crntScope[token]
+    } else if(style === "variable" || style === "variable-2") {
+      for(var j = scopes.length; j--;)
+        if(scopes[j][token]) {
+          addClass += scopes[j][token]
+          break
+        }
+    } else {
+      // noop, something we don't care about
+    }
+    return style + addClass
+  };
+
+  return {
+    startState: function () {
+      return {
+        scopes: [{}],
+        token: colouredVarTokens,
+        jsState: CodeMirror.startState(jsMode)
+      }
+    },
+
+    copyState: function (state) {
+      return {
+        token:   state.token,
+        scopes:  state.scopes,
+        jsState: CodeMirror.copyState(jsMode, state.jsState),
+      }
+    },
+
+    token: function (stream, state) {
+      return state.token(stream, state)
+    },
+
+    indent: function (state, textAfter) {
+      return jsMode.indent(state.jsState, textAfter);
+    },
+  };
+}, "javascript");
+</script>
 
 
 <script type="text/javascript">
@@ -103,15 +253,17 @@ challenges.forEach(function(challengeDom) {
   //   fullscreen
   //   panel       seems to only be above/below
   cmDom.cm = CodeMirror.fromTextArea(cmDom, {
-    mode:        "ruby",
+    mode:        "colouredVarTokens",
     lineNumbers: true,
     theme:       'base16-light',
   })
   cmDom.cm.setSize({height: '100%'})
   cmDom.cm.on('changes', (cm, change) => testAnswer(cm))
   testAnswer(cmDom.cm)
+  if(!window.cm) window.cm = cmDom.cm
 
   function testAnswer(cm) {
+    return
     const ruby        = cm.getValue()
     const evaluatedTo = Opal.eval(ruby)
     const tests       = [
