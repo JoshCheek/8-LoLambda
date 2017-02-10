@@ -191,6 +191,78 @@ Notice how we call it once with the definition of true, and it returns to us a f
 
 Go ahead and try translating the if statement to match these constraints :)
 
+This is what I wound up with:
+
+```js
+(TRUE => FALSE => IF => {
+  console.log(IF(TRUE)("pass")("fail"))
+  console.log(IF(FALSE)("fail")("pass"))
+})
+
+// TRUE
+(trueCase => falseCase => trueCase)
+
+// FALSE
+(trueCase => falseCase => falseCase)
+
+// IF
+(bool => trueCase => falseCase => bool(trueCase)(falseCase))
+```
+
+
+The lambda Calculus is lazy (fix our `if` statement)
+----------------------------------------------------
+
+There is one more difference we need to account for. The lambda calculus
+evaluates its expressions lazily, but JavaScript does it eagerly. This means
+JavaScript evaluates the branches before passing them to the if statement.
+This will mess up our base cases when we do recursion.
+
+We'll deal with this by wrapping inputs to `IF` in lambdas.
+
+```js
+console.log(IF(TRUE)(_=>"pass")(_=>"fail"))
+console.log(IF(FALSE)(_=>"fail")(_=>"pass"))
+```
+
+And then calling whichever one is returned by the boolean.
+But calling them requires an argument,
+and that value must be a lambda since that's all we have to work with,
+but nothing should ever be done with that lambda.
+If it's ever called, we'd like our program to explode so that we know
+there's a bug, so we'll call this function `dynamite` and its body will
+use JavaScript's `throw` to cause an explosion.
+
+```js
+bool => trueCase => falseCase => {
+  var dynamite = (arg => { throw(`KABOOM! Called with ${arg}`) })
+  return bool(trueCase)(falseCase)(dynamite)
+}
+```
+
+And now, use the refactoring you learned earlier to remove the variable.
+I wound up with this:
+
+```js
+(TRUE => FALSE => IF => {
+  console.log(IF(TRUE)(_=>"pass")(_=>"fail"))
+  console.log(IF(FALSE)(_=>"fail")(_=>"pass"))
+})
+
+// true
+(trueCase => falseCase => trueCase)
+
+// false
+(trueCase => falseCase => falseCase)
+
+// if
+( (dynamite => bool => trueCase => falseCase =>
+    bool(trueCase)(falseCase)(dynamite))
+  (arg => { throw(`KABOOM! Called with ${arg}`) })
+)
+```
+
+
 ----------------------
 
 * Define y combinator?
