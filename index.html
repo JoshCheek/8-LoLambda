@@ -93,77 +93,78 @@ Some text before.
 
 <div class="challenge">
 <textarea>
-(a =&gt; (a =&gt; a(a))(a))
-//(car =&gt;( cdr =&gt;( cons =&gt;(
-// _or =&gt;( _and =&gt;( _if =&gt;( _true =&gt;( _false =&gt;(
-// progression =&gt;( noop =&gt;( print_num =&gt;( y_combinator =&gt;(
-// succ =&gt;( pred =&gt;( is_zero =&gt;(
-// zero =&gt;( one =&gt;( two =&gt;( three =&gt;( four =&gt;( five =&gt;( six =&gt;( seven =&gt;( eight =&gt;( nine =&gt;( ten =&gt;
+(f =&gt; (x =&gt; f(x(x)))(x =&gt; f(x(x)))
+
+// (car =&gt;( cdr =&gt;( cons =&gt;(
+//  _or =&gt;( _and =&gt;( _if =&gt;( _true =&gt;( _false =&gt;(
+//  progression =&gt;( noop =&gt;( print_num =&gt;( y_combinator =&gt;(
+//  succ =&gt;( pred =&gt;( is_zero =&gt;(
+//  n0 =&gt;( n1 =&gt;( n2 =&gt;( n3 =&gt;( n4 =&gt;( n5 =&gt;( n6 =&gt;( n7 =&gt;( n8 =&gt;( n9 =&gt;( n10 =&gt;
 //
-//  // -----  This code recursively counts down from 10  -----
-//  y_combinator(
-//    (recur =&gt; num =&gt;
-//      progression
-//        (print_num(num))
-//        (_if (is_zero(num))
-//             (noop)
-//             (_ =&gt; recur(pred(num))))))
-//    (ten) // &lt;-- See? We call it with 10!
+//   // -----  This code recursively counts down from 10  -----
+//   y_combinator(
+//     (recur =&gt; num =&gt;
+//       progression
+//         (print_num(num))
+//         (_if (is_zero(num))
+//              (noop)
+//              (_ =&gt; recur(pred(num))))))
+//     (n10) // &lt;-- See? We call it with 10!
 //
-//// ==========  All the support code we need in order to pull it off  ==========
+// // ==========  All the support code we need in order to pull it off  ==========
 //
-//// -----  Church Numerals  -----
-//)(succ(nine)
-//))(succ(eight)
-//))(succ(seven)
-//))(succ(six)
-//))(succ(five)
-//))(succ(four)
-//))(succ(three)
-//))(succ(two)
-//))(succ(one)
-//))(succ(zero)
-//))(fn =&gt; arg =&gt; arg
-//))(n =&gt; n(_ =&gt; _false)(_true)
+// // -----  Church Numerals  -----
+// )(succ(n9)
+// ))(succ(n8)
+// ))(succ(n7)
+// ))(succ(n6)
+// ))(succ(n5)
+// ))(succ(n4)
+// ))(succ(n3)
+// ))(succ(n2)
+// ))(succ(n1)
+// ))(succ(n0)
+// ))(fn =&gt; arg =&gt; arg
+// ))(n =&gt; n(_ =&gt; _false)(_true)
 //
-//// this is the integer predecessor function,
-//// I made it up, IDK how you're actually supposed to do it
-//))(n1 =&gt; fn =&gt; arg =&gt;
-//    (state =&gt; delayedFn =&gt;
-//        cdr(n1(delayedFn)(state)))
-//      (cons(_false)(arg))// initial state
-//      ((state =&gt;
-//        (already_skipped =&gt; arg =&gt;
-//            _if (already_skipped(state))
-//                (_=&gt; cons(_true)(fn(arg(state))))
-//                (_=&gt; cons(_true)(arg(state))))
-//        (car)
-//        (cdr)))
-//))(num =&gt; fn =&gt; arg =&gt; num(fn)(fn(arg))
+// // this is the integer predecessor function,
+// // I made it up, IDK how you're actually supposed to do it
+// ))(n1 =&gt; fn =&gt; arg =&gt;
+//     (state =&gt; delayedFn =&gt;
+//         cdr(n1(delayedFn)(state)))
+//       (cons(_false)(arg))// initial state
+//       ((state =&gt;
+//         (already_skipped =&gt; arg =&gt;
+//             _if (already_skipped(state))
+//                 (_=&gt; cons(_true)(fn(arg(state))))
+//                 (_=&gt; cons(_true)(arg(state))))
+//         (car)
+//         (cdr)))
+// ))(num =&gt; fn =&gt; arg =&gt; num(fn)(fn(arg))
 //
-//// -----  Miscellaneous  -----
-//// The y combinator ^_^
-//))((y =&gt; fn =&gt; n =&gt; fn(y(y)(fn))(n))
-//   (y =&gt; fn =&gt; n =&gt; fn(y(y)(fn))(n))
+// // -----  Miscellaneous  -----
+// // The y combinator ^_^
+// ))((y =&gt; fn =&gt; n =&gt; fn(y(y)(fn))(n))
+//    (y =&gt; fn =&gt; n =&gt; fn(y(y)(fn))(n))
 //
-//// print_num, the one place we cheat
-//))(num =&gt; console.log(num(n =&gt; n+1)(0)) || num
-//))(_ =&gt; _
-//))(first =&gt; second =&gt; second
+// // print_num, the one place we cheat
+// ))(num =&gt; console.log(num(n =&gt; n+1)(0)) || num
+// ))(_ =&gt; _
+// ))(first =&gt; second =&gt; second
 //
-//// -----  true, false, boolean operators, if statements, etc  -----
-//))(true_branch =&gt; false_branch =&gt; false_branch
-//))(true_branch =&gt; false_branch =&gt; true_branch
-//))(bool =&gt; true_branch =&gt; false_branch =&gt;
-//     bool(true_branch)(false_branch)(bool)
-//))(bool1 =&gt; bool2 =&gt; bool1(bool2)(bool1)
-//))(bool1 =&gt; bool2 =&gt; bool1(bool1)(bool2)
+// // -----  true, false, boolean operators, if statements, etc  -----
+// ))(true_branch =&gt; false_branch =&gt; false_branch
+// ))(true_branch =&gt; false_branch =&gt; true_branch
+// ))(bool =&gt; true_branch =&gt; false_branch =&gt;
+//      bool(true_branch)(false_branch)(bool)
+// ))(bool1 =&gt; bool2 =&gt; bool1(bool2)(bool1)
+// ))(bool1 =&gt; bool2 =&gt; bool1(bool1)(bool2)
 //
-//// -----  linked lists  -----
-//))(first =&gt; second =&gt; fn =&gt; fn(first)(second)
-//))(cons_cell =&gt; cons_cell(first =&gt; second =&gt; second)
-//))(cons_cell =&gt; cons_cell(first =&gt; second =&gt; first)
-//)
+// // -----  linked lists  -----
+// ))(first =&gt; second =&gt; fn =&gt; fn(first)(second)
+// ))(cons_cell =&gt; cons_cell(first =&gt; second =&gt; second)
+// ))(cons_cell =&gt; cons_cell(first =&gt; second =&gt; first)
+// )
 </textarea>
 <ul class="test-results"></ul>
 </div>
