@@ -81,20 +81,20 @@ describe('Sections', function() {
       expect(seg(`\nMETA id: 1`).id).toEqual('1')
     })
 
-    xit('strips leading META info and leading/newlines', () => {
-      expect(sec(`META id: 1\na\nb`).body).toEqual(`a\nb`)
-      expect(sec(`META id: 1\na\nb`).body).toEqual(`a\nb`)
-      expect(sec(`META id: 1\n\na\nb`).body).toEqual(`a\nb`)
-      expect(sec(`META id: 1\nMETA name: whatever\na\nb`).body).toEqual(`a\nb`)
+    it('strips leading META info and leading/newlines', () => {
+      expect(seg(`META id: 1\na\nb`).body).toEqual(`a\nb`)
+      expect(seg(`META id: 1\na\nb`).body).toEqual(`a\nb`)
+      expect(seg(`META id: 1\n\na\nb`).body).toEqual(`a\nb`)
+      expect(seg(`META id: 1\nMETA name: whatever\na\nb`).body).toEqual(`a\nb`)
 
-      expect(sec(`META id: 1\n\nMETA id:2\na\nb`).body).toEqual(`a\nb`)
-      expect(sec(`META id: 1\n\nMETA id:2\na\nb`).body).toEqual(`a\nb`)
-      expect(sec(`META id: 1\n\nMETA id:2\n\na\nb`).body).toEqual(`a\nb`)
-      expect(sec(`META id: 1\n\nMETA id:2\nMETA name: whatever\na\nb`).body).toEqual(`a\nb`)
+      expect(seg(`META id: 1\n\nMETA id:2\na\nb`).body).toEqual(`a\nb`)
+      expect(seg(`META id: 1\n\nMETA id:2\na\nb`).body).toEqual(`a\nb`)
+      expect(seg(`META id: 1\n\nMETA id:2\n\na\nb`).body).toEqual(`a\nb`)
+      expect(seg(`META id: 1\n\nMETA id:2\nMETA name: whatever\na\nb`).body).toEqual(`a\nb`)
     })
 
-    xit('concludes the section when it discovers a different kind of component', () => {
-      expect(sec("a\n```js\n1\n```\nb").body).toEqual("a")
+    xit('concludes the segment when it discovers a different kind of component', () => {
+      expect(seg("a\n```js\n1\n```\nb").body).toEqual("a")
     })
   })
 

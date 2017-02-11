@@ -20,7 +20,7 @@ Build.fromMarkdownBody = function(body) {
     // body: "",
     segments: [],
   }
-  const lines   = body.split(`\n`)
+  const lines = body.split(`\n`)
   extractMetadata(lines, section)
 
   const segment = {}
