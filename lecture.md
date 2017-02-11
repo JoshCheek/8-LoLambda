@@ -423,22 +423,34 @@ from this list: `$ ruby -e 'p Enumerable.instance_methods'`
 Y-Combinator
 ------------
 
+```js
+let Y     = (builder => f => arg => f(builder(builder)(f))(arg))
+            (builder => f => arg => f(builder(builder)(f))(arg))
+
+let PRINT = toPrint => {
+  console.log(toPrint)
+  return toPrint
+}
+
+let TRUE   = t => f => t
+let FALSE  = t => f => f
+let IF     = (dynamite => bool => trueCase => falseCase =>
+               bool(trueCase)(falseCase)(dynamite))
+             (arg => { throw(`KABOOM! Called with ${arg}`) })
+
+let JS_TO_BOOL = bool => bool ? TRUE : FALSE
+
+let NOOP   = arg => NOOP
+
+Y(recur => n => {
+  IF(JS_TO_BOOL(n!=0))
+    (() => recur(PRINT(n)-1))
+    (NOOP)
+})(10)
+
+```
+
 
 ----------------------
-
-* Define y combinator?
-
-```js
-function abc() {}
-// becomes
-var abc = () => {}
-```
-
-```js
-var abc = (x) => x * x
-abc(3)
-// becomes
-((abc) => abc(3))((x) => x * x)
-```
 
 * Maybe I do one big one, they do several small ones that add up to the big one?
