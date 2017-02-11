@@ -1,9 +1,0 @@
-Options:
-  editor style (emacs/vim/sublime/default)
-  language (js/ruby)
-
-Keybindings for:
-  run tests for each one   (what does FCC use?)
-  Move to the next editor
-
-Solutions in both JS and Ruby

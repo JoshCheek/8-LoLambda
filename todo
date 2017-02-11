@@ -1,4 +1,4 @@
-New branch
+----  TODO  -----
 Move the react.js stuff toplevel
 Translate the lecture into sections
 Fill out the first several sections
@@ -16,3 +16,15 @@ Once it begins to take shape in react
   On the verbose branch
   In the experiments dir
 Invite some humans (corey, michael, uhm, any others?)
+
+
+-----  Other Thoughts  -----
+Options:
+  editor style (emacs/vim/sublime/default)
+  language (js/ruby)
+
+Keybindings for:
+  run tests for each one   (what does FCC use?)
+  Move to the next editor
+
+Solutions in both JS and Ruby
