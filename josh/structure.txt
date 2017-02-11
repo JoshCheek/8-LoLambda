@@ -1,0 +1,42 @@
+state:
+  functions:
+    {id, name, body, defnLoc}
+  sections: [Section]
+
+Section:
+  id
+  body                     // raw markdown string
+  components: [Component]  // generated from markdown
+  virtual:
+    completedTests
+
+Component = Markdown | CodeBlock | Test
+
+Markdown:
+  id
+  rawMarkdown
+
+CodeBlock:
+  // if it has a name then its body gets exported to the state's fns
+  // when rendering, we pull its value from the state's fns
+  // but can reset it to the initialBody, which is taken from the markdown's
+  // code block
+  id
+  name (String?) // name of the fn being written
+  initialBody
+  body
+  maybe:
+    isEditable // defaults to true, but can be set to false to render a block that isn't intended to be interacti
+    isRunnable // or maybe they should always be runnable, running implies just evaluating the code and displaying the result and any output
+
+Test:
+  // a test will be defined as ```test with some format or other inside
+  codeBlockId // the id of the CodeBlock it's testing
+  name
+  body        // JavaScript code with an assertion in it
+  status (TestStatus)
+
+TestStatus
+  = Pass
+  = Pending
+  = Fail(reason (String))
