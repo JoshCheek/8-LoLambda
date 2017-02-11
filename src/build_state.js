@@ -126,10 +126,8 @@ function segmentType(observedType) {
 
 function findSegment(sections, id) {
   for(let section of sections) {
-    const segment = section.segments.find(sec => {
-      return sec.id === id
-    })
-    if(segment) return segment
+    let seg = section.segments.find(sec => sec.id === id)
+    if(seg) return seg
   }
   return null
 }
