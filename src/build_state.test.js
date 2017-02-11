@@ -5,7 +5,6 @@ import Build from './build_state'
 const fromMd = Build.fromMarkdownBodies
 
 describe('Building the inital state out of sections', () => {
-
   it('adds the markdown files to the sections list', () => {
     expect(fromMd([]).sections.length).toEqual(0)
     expect(fromMd(['a']).sections.length).toEqual(1)
@@ -43,18 +42,16 @@ describe('Building the inital state out of sections', () => {
   })
 
   describe('currentSection', () => {
-    it('is null', () => {
+    it('is null', () =>
       // on null, it'll just have to discoveer the first section
       // no sense specifying that it could be set here when that same work
       // will have to be duplicated later anyway
-      expect(fromMd(['META id: a']).currentSection).toEqual(null)
-    })
+      expect(fromMd(['META id: a']).currentSection).toEqual(null))
   })
 
   describe('function', () => {
-    it('is an empty object by default', () => {
-      expect(fromMd(['META id: a', 'b']).functions).toEqual({})
-    })
+    it('is an empty object by default', () =>
+      expect(fromMd(['META id: a', 'b']).functions).toEqual({}))
   })
 })
 
@@ -88,18 +85,16 @@ describe('Sections', () => {
   })
 
   describe('Markdown segments', () => {
-    it('has a type of "md"', () => {
-      expect(seg("a").type).toEqual("md")
-    })
+    it('has a type of "md"', () =>
+      expect(seg("a").type).toEqual("md"))
 
     it('sets the markdown to the segments\'s body', () => {
       expect(seg("a").body).toEqual("a")
       expect(seg("a\nb").body).toEqual("a\nb")
     })
 
-    it('allows the component to declare its own metadata after the leading line', () => {
-      expect(seg(`\nMETA id: 1`).id).toEqual('1')
-    })
+    it('allows the component to declare its own metadata after the leading line', () =>
+      expect(seg(`\nMETA id: 1`).id).toEqual('1'))
 
     it('strips leading META info and leading/newlines', () => {
       expect(seg(`META id: 1\na\nb`).body).toEqual(`a\nb`)
@@ -123,25 +118,20 @@ describe('Sections', () => {
 
 
   describe('CodeBlock segments', () => {
-    it('has a type of codeBlock', () => {
-      expect(seg("```js\n1```").type).toEqual('codeBlock')
-    })
+    it('has a type of codeBlock', () =>
+      expect(seg("```js\n1```").type).toEqual('codeBlock'))
 
-    it('is entered in a markdown code block for js', () => {
-      expect(seg("```js\n1\n```").body).toEqual('1')
-    })
+    it('is entered in a markdown code block for js', () =>
+      expect(seg("```js\n1\n```").body).toEqual('1'))
 
-    it('can specify an id in its metadata', () => {
-      expect(seg("```js\nMETA id: myId\n1\n```").id).toEqual('myId')
-    })
+    it('can specify an id in its metadata', () =>
+      expect(seg("```js\nMETA id: myId\n1\n```").id).toEqual('myId'))
 
-    it('can specify a name in its metadata', () => {
-      expect(seg("```js\nMETA id: 1\nMETA name: myName\n```").name).toEqual('myName')
-    })
+    it('can specify a name in its metadata', () =>
+      expect(seg("```js\nMETA id: 1\nMETA name: myName\n```").name).toEqual('myName'))
 
-    it('has an initialBody of the post-metadata text', () => {
-      expect(seg("```js\n1\n2\n```").body).toEqual('1\n2')
-    })
+    it('has an initialBody of the post-metadata text', () =>
+      expect(seg("```js\n1\n2\n```").body).toEqual('1\n2'))
 
     context('when it has a name', () => {
       it('adds the id, name, and body to the state\'s functions, keyed off the id', () => {
@@ -151,10 +141,9 @@ describe('Sections', () => {
         expect(state2.functions.id2).toEqual(undefined)
       })
 
-      it('throws an error if it does not also have an id', () => {
+      it('throws an error if it does not also have an id', () =>
         expect(() => fromMd(["```js\nMETA name: myName\n123\n```"]))
-          .toThrowError(/myName/)
-      })
+          .toThrowError(/myName/))
     })
   })
 
@@ -175,13 +164,11 @@ describe('Sections', () => {
       expect(() => sec(solForTarget)).toThrowError(/targetId/)
     })
 
-    it('explodes if the id it is for DNE', () => {
-      expect(() => sec(cbForTarget+solForNothing)).toThrowError(/for/)
-    })
+    it('explodes if the id it is for DNE', () =>
+      expect(() => sec(cbForTarget+solForNothing)).toThrowError(/for/))
 
-    it('explodes if the id it is for is not a code block', () => {
-      expect(() => sec(mdForTarget+solForTarget)).toThrowError(/targetId/)
-    })
+    it('explodes if the id it is for is not a code block', () =>
+      expect(() => sec(mdForTarget+solForTarget)).toThrowError(/targetId/))
 
     xit('stores the post metadata as the body', () => {
     })
