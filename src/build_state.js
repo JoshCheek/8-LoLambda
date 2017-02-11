@@ -104,7 +104,8 @@ function hasNonEmptyLines(lines) {
 function segmentType(observedType) {
   if(!observedType) return "md"
   switch(observedType) {
-    case "js": return "codeBlock"
+    case "js":       return "codeBlock"
+    case "solution": return "solution"
     default:
       // for the moment
   }

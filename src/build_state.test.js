@@ -157,10 +157,25 @@ describe('Sections', () => {
   })
 
 
-  // describe('Solution segments', () => {
-  //   it('must declare the CodeBlock its for in its metadata')
-  //   it('stores the post metadata as the body')
-  // })
+  describe('Solution segments', () => {
+    it('has a type of "solution"', () => {
+      let section = sec("```js\nMETA id: 1\n```\n```solution\nMETA for: 1\n```")
+      expect(section.segments[1].type).toEqual('solution')
+    })
+
+    xit('must declare the CodeBlock its for in its metadata', () => {
+      let cb   = '```js\nMETA id: cbId\ncodeBody\n```\n'
+      let soln = '```solution\nMETA for: cbId\nsolnBody\n```\n'
+      expect(() => sec(soln)).toThrowError(/cbId/) // error
+      sec(cb+soln) // no error
+    })
+
+    xit('stores the post metadata as the body', () => {
+    })
+
+    xit('explodes if the id it is for DNE', () => {
+    })
+  })
 
 
   // describe('Test segments', () => {
