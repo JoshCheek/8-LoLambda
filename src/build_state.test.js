@@ -1,17 +1,50 @@
+'use strict'
 import Build from './build_state'
 
 describe('Building the inital state out of sections', function() {
-  xit('adds the markdown files to the sections in the order they are provided', () => {
-    expect(true).toEqual(true)
+  let fromMd = Build.fromMarkdown
+
+  it('adds the markdown files to the sections list', () => {
+    expect(fromMd([]).sections.length).toEqual(0)
+    expect(fromMd(['a']).sections.length).toEqual(1)
+    expect(fromMd(['a', 'b']).sections.length).toEqual(2)
   })
-  it('allows the section to declare an id with initial lines of "META id: sectionId"')
-    // otherwise id is nil
-  it('throws an error if the id collides')
+
+  xit('allows the section to declare an id with initial lines of "META id: sectionId"', () => {
+    let idFor = md => fromMd([md]).sections[0].id
+    expect(idFor(`abc`)).toEqual(null)
+    expect(idFor(`META id: customId\nabc`)).toEqual('customId')
+  })
+
+  xit('throws an error if provided ids collide', () => {
+    fromMd(['a', 'a'])                         // not provided, no collision
+    fromMd(['META id: 1\na', 'META id: 2\na']) // provided but different
+
+    // how do I assert that it should collide here?
+    expect(true).toEqual(false)
+    fromMd(['META id: 1\na', 'META id: 1\na'])
+  })
+
+  xit('adds the markdown files to the sections in the order they are provided', () => {
+    let ids
+
+    ids = fromMd(['META id: a', 'META id: b']).sections.map(sec => sec.id)
+    expect(ids).toDeepEqual(['a', 'b'])
+
+    ids = fromMd(['META id: b', 'META id: a']).sections.map(sec => sec.id)
+    expect(ids).toDeepEqual(['b', 'a'])
+  })
 
   describe('currentSection', function() {
-    it('is null')
+    xit('is null', () => {
+      // on null, it'll just have to discoveer the first section
+      // no sense specifying that it could be set here when that same work
+      // will have to be duplicated later anyway
+      expect(fromMd(['META id: a']).currentSection).toEqual(null)
+    })
   })
 })
+
 
 describe('Parsing a section\'s components', function() {
   describe('Markdown components', function() {
