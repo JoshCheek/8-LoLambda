@@ -5,11 +5,11 @@ state:
 
 Section:
   id
-  components: [Component]  // generated from markdown
+  segment: [Component]  // generated from markdown
   virtual:
     completedTests
 
-Component = Markdown | CodeBlock | Solution | Test
+Segment = Markdown | CodeBlock | Solution | Test
 
 Markdown:
   id

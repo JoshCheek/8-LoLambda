@@ -57,17 +57,18 @@ describe('Building the inital state out of sections', function() {
 })
 
 
-describe('Parsing a section\'s components', function() {
+describe('Parsing a section\'s segments', function() {
   const sec = md => fromMd([md]).sections[0]
+  const seg = md => sec(md).segments[0]
 
-  describe('Markdown components', function() {
-    it('sets the markdown to the segment\'s body', () => {
-      expect(sec("a").body).toEqual("a")
-      expect(sec("a\nb").body).toEqual("a\nb")
+  describe('Markdown segments', function() {
+    it('sets the markdown to the segments\'s body', () => {
+      expect(seg("a").body).toEqual("a")
+      expect(seg("a\nb").body).toEqual("a\nb")
     })
 
-    xit('allows the component to declare its own metadata after the leading line', () => {
-      expect(sec(`\nMETA id: 1`).id).toEqual('1')
+    it('allows the component to declare its own metadata after the leading line', () => {
+      expect(seg(`\nMETA id: 1`).id).toEqual('1')
     })
 
     xit('allows both the section and the component to have ids based on whether they are the first line or not', () => {
@@ -93,7 +94,7 @@ describe('Parsing a section\'s components', function() {
     })
   })
 
-  describe('CodeBlock components', function() {
+  describe('CodeBlock segments', function() {
     it('is entered in a markdown code block for js')
     it('can specify an id in its metadata')
     it('throws an error if the id collides')
@@ -104,12 +105,12 @@ describe('Parsing a section\'s components', function() {
     })
   })
 
-  describe('Solution components', function() {
+  describe('Solution segments', function() {
     it('must declare the CodeBlock its for in its metadata')
     it('stores the post metadata as the body')
   })
 
-  describe('Test components', function() {
+  describe('Test segments', function() {
     it('must declare the CodeBlock its for in its metadata')
     // should it have/require id and name?
     it('stores the post metadata as the body')
