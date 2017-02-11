@@ -29,7 +29,7 @@ Build.sectionFromMd = function(md) {
   extractMetadata(mdLines, section)
 
   segmentize(mdLines).filter(hasNonEmptyLines).forEach(lines => {
-    const segment = {type: lines.type}
+    const segment = {type: segmentType(lines.type)}
     extractMetadata(lines, segment)
     segment.body = lines.join(`\n`)
     section.segments.push(segment)
@@ -59,7 +59,6 @@ function segmentize(lines) {
 
   // build the segments out of the lines
   let match, segment = []
-  segment.type = 'md'
 
   lines.forEach(line => {
     // block start
@@ -72,7 +71,6 @@ function segmentize(lines) {
     } else if(line.match(/^```/)) {
       segments.push(segment)
       segment = []
-      segment.type = 'md'
 
     // content within the current segment
     } else {
@@ -87,4 +85,13 @@ function segmentize(lines) {
 function hasNonEmptyLines(lines) {
   const nonemptyLines = lines.filter(line => line.length)
   return nonemptyLines.length !== 0
+}
+
+function segmentType(observedType) {
+  if(!observedType) return "md"
+  switch(observedType) {
+    case "js": return "codeBlock"
+    default:
+      // for the moment
+  }
 }

@@ -117,11 +117,26 @@ describe('Sections', () => {
   })
 
   describe('CodeBlock segments', () => {
-    it('is entered in a markdown code block for js')
-    it('can specify an id in its metadata')
-    it('throws an error if the id collides')
-    it('can specify a name in its metadata')
-    it('has an initialBody of the post-metadata text')
+    it('has a type of codeBlock', () => {
+      expect(seg("```js\n1```").type).toEqual('codeBlock')
+    })
+
+    xit('is entered in a markdown code block for js', () => {
+      seg("```js\n1```")
+    })
+
+    xit('can specify an id in its metadata', () => {
+    })
+
+    xit('throws an error if the id collides', () => {
+    })
+
+    xit('can specify a name in its metadata', () => {
+    })
+
+    xit('has an initialBody of the post-metadata text', () => {
+    })
+
     context('when it has a name', () => {
       it('adds the id, name, and body to the state\'s functions, keyed off the id')
     })
