@@ -83,6 +83,10 @@ describe('Sections', () => {
   })
 
   describe('Markdown segments', () => {
+    it('has a type of "md"', () => {
+      expect(seg("a").type).toEqual("md")
+    })
+
     it('sets the markdown to the segments\'s body', () => {
       expect(seg("a").body).toEqual("a")
       expect(seg("a\nb").body).toEqual("a\nb")
