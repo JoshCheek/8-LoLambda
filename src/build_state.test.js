@@ -16,13 +16,18 @@ describe('Building the inital state out of sections', function() {
     expect(idFor(`META id: customId\nabc`)).toEqual('customId')
   })
 
-  xit('throws an error if provided ids collide', () => {
-    fromMd(['a', 'a'])                         // not provided, no collision
-    fromMd(['META id: 1\na', 'META id: 2\na']) // provided but different
+  // it('throws on unknown metadata')  // idk if I actually want this
+
+  it('throws an error if provided ids collide', () => {
+    // not provided, no collision
+    fromMd(['a', 'a'])
+
+    // provided but different
+    fromMd(['META id: theId\na', 'META id: notTheId\na'])
 
     // how do I assert that it should collide here?
-    expect(true).toEqual(false)
-    fromMd(['META id: 1\na', 'META id: 1\na'])
+    expect(() => fromMd(['META id: theId\na', 'META id: theId\na']))
+      .toThrowError(/theId/)
   })
 
   xit('adds the markdown files to the sections in the order they are provided', () => {

@@ -25,6 +25,10 @@ Build.fromMarkdownBodies = function(markdownBodies) {
   }
   markdownBodies.forEach(body => {
     const section = Build.fromMarkdownBody(body)
+    state.sections.forEach(other => {
+      if(other.id && section.id === other.id)
+        throw(`IDs must be unique, but multiple sections had an id of ${section.id}`)
+    })
     state.sections.push(section)
   })
   return state
