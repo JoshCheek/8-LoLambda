@@ -4,7 +4,8 @@ function Build() {
 
 Build.fromMarkdownBody = function(body) {
   const section = {
-    id: null
+    id:   null,
+    body: "",
   }
 
   let lines = body.split(`\n`),
@@ -13,6 +14,7 @@ Build.fromMarkdownBody = function(body) {
     section[match[1]] = match[2]
     lines.shift()
   }
+  section.body = lines.join(`\n`)
 
   return section
 }

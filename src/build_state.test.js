@@ -1,8 +1,8 @@
 'use strict'
 import Build from './build_state'
+const fromMd = Build.fromMarkdownBodies
 
 describe('Building the inital state out of sections', function() {
-  let fromMd = Build.fromMarkdownBodies
 
   it('adds the markdown files to the sections list', () => {
     expect(fromMd([]).sections.length).toEqual(0)
@@ -58,12 +58,39 @@ describe('Building the inital state out of sections', function() {
 
 
 describe('Parsing a section\'s components', function() {
+  const sec = md => fromMd([md]).sections[0]
+
   describe('Markdown components', function() {
-    // it('sets the markdown to the segment\'s body')
-    it('strips leading META info and leading/newlines')
-    it('allows the component to declare an id with initial lines of "META id: markdownID"')
-    it('sets the rawMarkdown to the body with the META lines stripped')
-    it('concludes the section when it discovers a different kind of component')
+    it('sets the markdown to the segment\'s body', () => {
+      expect(sec("a").body).toEqual("a")
+      expect(sec("a\nb").body).toEqual("a\nb")
+    })
+
+    xit('allows the component to declare its own metadata after the leading line', () => {
+      expect(sec(`\nMETA id: 1`).id).toEqual('1')
+    })
+
+    xit('allows both the section and the component to have ids based on whether they are the first line or not', () => {
+      let state = fromMd(`META id: secID\n\nMETA mdID`)
+      expect(state.id).toEqual('secID')
+      expect(state.sections[0].id).toEqual('secID')
+    })
+
+    xit('strips leading META info and leading/newlines', () => {
+      expect(sec(`META id: 1\na\nb`).body).toEqual(`a\nb`)
+      expect(sec(`META id: 1\na\nb`).body).toEqual(`a\nb`)
+      expect(sec(`META id: 1\n\na\nb`).body).toEqual(`a\nb`)
+      expect(sec(`META id: 1\nMETA name: whatever\na\nb`).body).toEqual(`a\nb`)
+
+      expect(sec(`META id: 1\n\nMETA id:2\na\nb`).body).toEqual(`a\nb`)
+      expect(sec(`META id: 1\n\nMETA id:2\na\nb`).body).toEqual(`a\nb`)
+      expect(sec(`META id: 1\n\nMETA id:2\n\na\nb`).body).toEqual(`a\nb`)
+      expect(sec(`META id: 1\n\nMETA id:2\nMETA name: whatever\na\nb`).body).toEqual(`a\nb`)
+    })
+
+    xit('concludes the section when it discovers a different kind of component', () => {
+      expect(sec("a\n```js\n1\n```\nb").body).toEqual("a")
+    })
   })
 
   describe('CodeBlock components', function() {
