@@ -80,6 +80,9 @@ describe('Sections', () => {
       let bodies = section.segments.map(seg => seg.body)
       expect(bodies).toEqual(["1", "2"])
     })
+
+    xit('throws an error if ids collide, even across sections', () => {
+    })
   })
 
   describe('Markdown segments', () => {
@@ -116,41 +119,50 @@ describe('Sections', () => {
     })
   })
 
+
   describe('CodeBlock segments', () => {
     it('has a type of codeBlock', () => {
       expect(seg("```js\n1```").type).toEqual('codeBlock')
     })
 
-    xit('is entered in a markdown code block for js', () => {
-      seg("```js\n1```")
+    it('is entered in a markdown code block for js', () => {
+      expect(seg("```js\n1\n```").body).toEqual('1')
     })
 
-    xit('can specify an id in its metadata', () => {
+    it('can specify an id in its metadata', () => {
+      expect(seg("```js\nMETA id: myId\n1\n```").id).toEqual('myId')
     })
 
-    xit('throws an error if the id collides', () => {
+    it('can specify a name in its metadata', () => {
+      expect(seg("```js\nMETA name: myName\n```").name).toEqual('myName')
     })
 
-    xit('can specify a name in its metadata', () => {
-    })
-
-    xit('has an initialBody of the post-metadata text', () => {
+    it('has an initialBody of the post-metadata text', () => {
+      expect(seg("```js\n1\n2\n```").body).toEqual('1\n2')
     })
 
     context('when it has a name', () => {
-      it('adds the id, name, and body to the state\'s functions, keyed off the id')
+      xit('adds the id, name, and body to the state\'s functions, keyed off the id', () => {
+      })
     })
   })
 
-  describe('Solution segments', () => {
-    it('must declare the CodeBlock its for in its metadata')
-    it('stores the post metadata as the body')
-  })
 
-  describe('Test segments', () => {
-    it('must declare the CodeBlock its for in its metadata')
-    // should it have/require id and name?
-    it('stores the post metadata as the body')
-    it('has a status of pending')
-  })
+  // describe('Solution segments', () => {
+  //   it('must declare the CodeBlock its for in its metadata')
+  //   it('stores the post metadata as the body')
+  // })
+
+
+  // describe('Test segments', () => {
+  //   it('must declare the CodeBlock its for in its metadata')
+  //   // should it have/require id and name?
+  //   it('stores the post metadata as the body')
+  //   it('has a status of pending')
+  // })
+
+
+  // describe('Unknown segments', () => {
+  //   it('throws an error')
+  // })
 })
