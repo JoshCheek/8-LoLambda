@@ -2,7 +2,7 @@
 import Build from './build_state'
 
 describe('Building the inital state out of sections', function() {
-  let fromMd = Build.fromMarkdown
+  let fromMd = Build.fromMarkdownBodies
 
   it('adds the markdown files to the sections list', () => {
     expect(fromMd([]).sections.length).toEqual(0)
