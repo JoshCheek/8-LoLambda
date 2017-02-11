@@ -10,7 +10,7 @@ describe('Building the inital state out of sections', function() {
     expect(fromMd(['a', 'b']).sections.length).toEqual(2)
   })
 
-  xit('allows the section to declare an id with initial lines of "META id: sectionId"', () => {
+  it('allows the section to declare an id with initial lines of "META id: sectionId"', () => {
     let idFor = md => fromMd([md]).sections[0].id
     expect(idFor(`abc`)).toEqual(null)
     expect(idFor(`META id: customId\nabc`)).toEqual('customId')
