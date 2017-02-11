@@ -165,21 +165,25 @@ describe('Sections', () => {
       expect(section.segments[1].type).toEqual('solution')
     })
 
+    const cbForTarget   = '```js\nMETA id: targetId\ncodeBody\n```\n'
+    const mdForTarget   = 'META id: targetId\n'
+    const solForTarget  = '```solution\nMETA for: targetId\nsolnBody\n```\n'
+    const solForNothing = '```solution\nsolnBody\n```\n'
+
     it('must declare the CodeBlock its for in its metadata', () => {
-      let cb   = '```js\nMETA id: targetId\ncodeBody\n```\n'
-      let md   = 'META id: targetId\n'
-      let sol1 = '```solution\nMETA for: targetId\nsolnBody\n```\n'
-      let sol2 = '```solution\nsolnBody\n```\n'
-      sec(cb+sol1)                                        // all good
-      expect(() => sec(cb+sol2)).toThrowError(/for/)      // didn't declare what it's for
-      expect(() => sec(sol1)).toThrowError(/targetId/)    // couldn't find the id
-      expect(() => sec(md+sol1)).toThrowError(/targetId/) // solutions are for code blocks, not markdown
+      sec(cbForTarget+solForTarget)
+      expect(() => sec(solForTarget)).toThrowError(/targetId/)
+    })
+
+    it('explodes if the id it is for DNE', () => {
+      expect(() => sec(cbForTarget+solForNothing)).toThrowError(/for/)
+    })
+
+    it('explodes if the id it is for is not a code block', () => {
+      expect(() => sec(mdForTarget+solForTarget)).toThrowError(/targetId/)
     })
 
     xit('stores the post metadata as the body', () => {
-    })
-
-    xit('explodes if the id it is for DNE', () => {
     })
   })
 
