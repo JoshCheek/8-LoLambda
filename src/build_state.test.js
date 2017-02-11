@@ -57,9 +57,19 @@ describe('Building the inital state out of sections', function() {
 })
 
 
-describe('Parsing a section\'s segments', function() {
+describe('Sections', function() {
   const sec = md => fromMd([md]).sections[0]
   const seg = md => sec(md).segments[0]
+
+  describe('segments', function() {
+    it('allows both the section and the segments to have metadata based on whether they are the first line or not', () => {
+      let section = sec(`META id: sectionID\n\nMETA id: segmentID`)
+      expect(section.id).toEqual('sectionID')
+      expect(section.segments[0].id).toEqual('segmentID')
+    })
+
+    it('allows each segment to have metadata')
+  })
 
   describe('Markdown segments', function() {
     it('sets the markdown to the segments\'s body', () => {
@@ -69,12 +79,6 @@ describe('Parsing a section\'s segments', function() {
 
     it('allows the component to declare its own metadata after the leading line', () => {
       expect(seg(`\nMETA id: 1`).id).toEqual('1')
-    })
-
-    xit('allows both the section and the component to have ids based on whether they are the first line or not', () => {
-      let state = fromMd(`META id: secID\n\nMETA mdID`)
-      expect(state.id).toEqual('secID')
-      expect(state.sections[0].id).toEqual('secID')
     })
 
     xit('strips leading META info and leading/newlines', () => {
