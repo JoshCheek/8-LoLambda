@@ -19,9 +19,11 @@ Build.fromMarkdownBody = function(body) {
 
 Build.fromMarkdownBodies = function(markdownBodies) {
   const state = {
-    sections: []
-    // functions: { id: {id, name, body} }
-    // currentSection
+    functions: {
+      // id: {id, name, body}
+    },
+    sections: [],
+    currentSection: null,
   }
   markdownBodies.forEach(body => {
     const section = Build.fromMarkdownBody(body)

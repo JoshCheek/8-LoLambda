@@ -30,22 +30,28 @@ describe('Building the inital state out of sections', function() {
       .toThrowError(/theId/)
   })
 
-  xit('adds the markdown files to the sections in the order they are provided', () => {
+  it('adds the markdown files to the sections in the order they are provided', () => {
     let ids
 
     ids = fromMd(['META id: a', 'META id: b']).sections.map(sec => sec.id)
-    expect(ids).toDeepEqual(['a', 'b'])
+    expect(ids).toEqual(['a', 'b'])
 
     ids = fromMd(['META id: b', 'META id: a']).sections.map(sec => sec.id)
-    expect(ids).toDeepEqual(['b', 'a'])
+    expect(ids).toEqual(['b', 'a'])
   })
 
   describe('currentSection', function() {
-    xit('is null', () => {
+    it('is null', () => {
       // on null, it'll just have to discoveer the first section
       // no sense specifying that it could be set here when that same work
       // will have to be duplicated later anyway
       expect(fromMd(['META id: a']).currentSection).toEqual(null)
+    })
+  })
+
+  describe('function', function() {
+    it('is an empty object by default', () => {
+      expect(fromMd(['META id: a', 'b']).functions).toEqual({})
     })
   })
 })
