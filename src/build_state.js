@@ -23,10 +23,13 @@ Build.fromMarkdownBodies = function(markdownBodies) {
   // build functions
   state.sections.forEach(sec => {
     sec.segments.forEach(seg => {
-      if(seg.type === 'codeBlock' && seg.name)
+      if(seg.type === 'codeBlock' && seg.name) {
+        if(!seg.id)
+          throw(`CodeBlock ${seg.name} is missing an id`)
         state.functions[seg.id] = {
           id: seg.id, name: seg.name, body: seg.body
         }
+      }
     })
   })
 

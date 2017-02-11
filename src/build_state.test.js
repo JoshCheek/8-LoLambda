@@ -134,7 +134,7 @@ describe('Sections', () => {
     })
 
     it('can specify a name in its metadata', () => {
-      expect(seg("```js\nMETA name: myName\n```").name).toEqual('myName')
+      expect(seg("```js\nMETA id: 1\nMETA name: myName\n```").name).toEqual('myName')
     })
 
     it('has an initialBody of the post-metadata text', () => {
@@ -148,7 +148,11 @@ describe('Sections', () => {
         expect(state1.functions.id1).toEqual({id: 'id1', name: 'myName', body: '123'})
         expect(state2.functions.id2).toEqual(undefined)
       })
-      it('throws an error if it does not also have an id')
+
+      it('throws an error if it does not also have an id', () => {
+        expect(() => fromMd(["```js\nMETA name: myName\n123\n```"]))
+          .toThrowError(/myName/)
+      })
     })
   })
 
