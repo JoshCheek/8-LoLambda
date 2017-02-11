@@ -1,0 +1,18 @@
+New branch
+Move the react.js stuff toplevel
+Translate the lecture into sections
+Fill out the first several sections
+Test/write code to parse sections to state
+Test/write fn to receive events and update the state
+  events:
+    run test (id, body)
+    save result (id, body)
+    goto (id) // section | component
+    editCode (id, body)
+Begin trying to implement in react
+Once it begins to take shape in react
+  Start testing it
+  Reference ~/code/api-mashup
+  On the verbose branch
+  In the experiments dir
+Invite some humans (corey, michael, uhm, any others?)

@@ -2,6 +2,7 @@ state:
   functions:
     {id, name, body, defnLoc}
   sections: [Section]
+  currentSection
 
 Section:
   id
@@ -31,6 +32,7 @@ CodeBlock:
 
 Test:
   // a test will be defined as ```test with some format or other inside
+  id
   codeBlockId // the id of the CodeBlock it's testing
   name
   body        // JavaScript code with an assertion in it
