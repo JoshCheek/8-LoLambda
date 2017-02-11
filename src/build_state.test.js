@@ -1,4 +1,6 @@
 'use strict'
+// https://facebook.github.io/jest/docs/expect.html#content
+
 import Build from './build_state'
 const fromMd = Build.fromMarkdownBodies
 
@@ -163,11 +165,15 @@ describe('Sections', () => {
       expect(section.segments[1].type).toEqual('solution')
     })
 
-    xit('must declare the CodeBlock its for in its metadata', () => {
-      let cb   = '```js\nMETA id: cbId\ncodeBody\n```\n'
-      let soln = '```solution\nMETA for: cbId\nsolnBody\n```\n'
-      expect(() => sec(soln)).toThrowError(/cbId/) // error
-      sec(cb+soln) // no error
+    it('must declare the CodeBlock its for in its metadata', () => {
+      let cb   = '```js\nMETA id: targetId\ncodeBody\n```\n'
+      let md   = 'META id: targetId\n'
+      let sol1 = '```solution\nMETA for: targetId\nsolnBody\n```\n'
+      let sol2 = '```solution\nsolnBody\n```\n'
+      sec(cb+sol1)                                        // all good
+      expect(() => sec(cb+sol2)).toThrowError(/for/)      // didn't declare what it's for
+      expect(() => sec(sol1)).toThrowError(/targetId/)    // couldn't find the id
+      expect(() => sec(md+sol1)).toThrowError(/targetId/) // solutions are for code blocks, not markdown
     })
 
     xit('stores the post metadata as the body', () => {

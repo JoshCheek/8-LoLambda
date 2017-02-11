@@ -1,4 +1,5 @@
-// https://facebook.github.io/jest/docs/expect.html#content
+'use strict'
+
 function Build() { throw("idk what this should be") }
 export default Build
 
@@ -29,6 +30,18 @@ Build.fromMarkdownBodies = function(markdownBodies) {
         state.functions[seg.id] = {
           id: seg.id, name: seg.name, body: seg.body
         }
+      }
+    })
+  })
+
+  // validate solutions
+  state.sections.forEach(sec => {
+    sec.segments.forEach(seg => {
+      if(seg.type === 'solution') {
+        if(!seg.for)
+          throw(`A solution must list the id of the code block it is for`)
+        if(!findSegment(state.sections, seg.for))
+          throw(`There is a solution for ${seg.for}, but no codeb lock with that id!`)
       }
     })
   })
@@ -109,4 +122,14 @@ function segmentType(observedType) {
     default:
       // for the moment
   }
+}
+
+function findSegment(sections, id) {
+  for(let section of sections) {
+    const segment = section.segments.find(sec => {
+      return sec.id === id
+    })
+    if(segment) return segment
+  }
+  return null
 }
