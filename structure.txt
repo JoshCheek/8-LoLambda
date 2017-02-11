@@ -1,17 +1,15 @@
 state:
-  functions:
-    {id, name, body, defnLoc}
+  functions: { id: {id, name, body} }
   sections: [Section]
   currentSection
 
 Section:
   id
-  body                     // raw markdown string
   components: [Component]  // generated from markdown
   virtual:
     completedTests
 
-Component = Markdown | CodeBlock | Test
+Component = Markdown | CodeBlock | Solution | Test
 
 Markdown:
   id
@@ -30,10 +28,14 @@ CodeBlock:
     isEditable // defaults to true, but can be set to false to render a block that isn't intended to be interacti
     isRunnable // or maybe they should always be runnable, running implies just evaluating the code and displaying the result and any output
 
+Solution:
+  for (CodeBlockID)
+  body
+
 Test:
   // a test will be defined as ```test with some format or other inside
   id
-  codeBlockId // the id of the CodeBlock it's testing
+  for         // the id of the CodeBlock it's testing
   name
   body        // JavaScript code with an assertion in it
   status (TestStatus)
