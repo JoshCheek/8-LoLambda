@@ -1,32 +1,5 @@
-8Lambda
-=======
-
-8th Light University talk about the Lambda Calculus.
-
-
-What is the lambda calculus?
-----------------------------
-
-It's one of a handful of popular definitions of computation. This means we can formally reason about what a computer can do by reasoning about what the lambda calculus can do.
-
-In the lambda calculus, a lambda is a function. So if you know JavaScript, you already know what a lambda is! This expression in lambda calculus: `λx.x` is this expression in JavaScript: `function(x) { return x }` If you know Ruby, these are procs / blocks (there is a difference, but it's not important now).
-
-They use the word "Lambda" because it was written by mathematicians, and mathematicians like to use single letters. When they ran out of letters, they went to the Greek alphabet. Lambda is basically the Greek equivalent to our letter "L", and it means the same thing that "function" means in JavaScript.
-
-My dictionary says "calculus" is "a particular method or system of calculation or reasoning". If you only had functions to work with (no numbers, no strings, no assignments, no objects, etc), you'd have to create a system of reasoning to get anything done.
-
-So the lambda calculus is just a way to reason about a programming language that has lambdas, but nothing else.
-
-
 Why it's interesting
 --------------------
-
-Another popular definition of computability is the Turing Machine, hence phrases like "turing complete" which implies that something can be used as a programming language.
-
-IDK if this is real, but I like to think of these two definitions as giving rise to two different branches of programming. The turing machine leads to procedural languages, where the programmer specifies the instructions that the machine should perform. The lambda calculus leads to functional languages, where the programmer uses a declarative mathematical notation to reason about a problem.
-
-So if you like Clojure, Haskell, ML, and Elm, well their foundation is the lambda calculus. Even if not, it's worth playing with because ideas from the lambda calculus have permeated most languages at this point. For instance, we've already shown their prevalence in JavaScript and Ruby.
-
 
 Who made it?
 ------------
@@ -34,54 +7,6 @@ Who made it?
 Alonzo Church made it in the 30s. Note that Church was Alan Turing's thesis advisor, hence the "Church Turing thesis" which approximately says that Turing Machines and the Lambda Calculus define the same abilities. So if you're excited about Turing Machines, then this is similarly exciting!
 
 Another very influential person was Haskell Curry, who reduced the lambda calculus even further, creating yet another definition of computability called combinatory logic. This guy has three programming languages named after him, and at least one cat that I know of.
-
-
-How does it work?
------------------
-
-Alright, the lambda calculus has three things in it:
-
-* **functions** these take inputs and return an output (called a "lambda abstractions")
-* **variables** where the functions store their arguments
-* **function calls** so that you can run the function! (called an "application")
-
-That's it. Nothing else. No even numbers. No true / false. No if statements. No machine instructions.
-
-
-Key insight
------------
-
-When we say something like `31 + 9`, this doesn't mean anything until we define what `31` is, what `9` is, and what `+` is!
-
-Why is assembly so fascinating? Because this magical expression suddenly makes sense! We can finally see how `31` is represented in binary, we can see how it translates to a sequence of electrical values that are stored in hardware. And what of addition? Just a circuit that takes those electrical signals as inputs and outputs electrical signals that correspond to `40`, their sum!
-
-The lambda calculus is no different, we must define what `31` means and what `9` means and then we must must create a function that can take them as inputs and return a value that we consider to be the sum, `40`.
-
-
-Defining `true`, `false`, and `if`
-----------------------------------
-
-The way to create primitives in the lambda calculus is to ask what it is used for, and then make a lambda that does this. True and false are used to select between two options.
-
-So, `true` is a lambda that takes two values and returns the first, and `false` is a lambda that takes two values and returns the second.
-
-```js
-function TRUE(trueCase, falseCase)  { return trueCase  }
-function FALSE(trueCase, falseCase) { return falseCase }
-```
-
-An if statement takes a boolean and the two bodies. It calls the boolean with the two bodies, letting the boolean choose between them.
-
-```js
-function IF(boolean, trueCase, falseCase) { return boolean(trueCase, falseCase) }
-```
-
-Lets try it out
-
-```js
-IF(TRUE,  'first', 'second') // => 'first'
-IF(FALSE, 'first', 'second') // => 'second'
-```
 
 
 Translating our code to the lambda calculus
@@ -454,3 +379,7 @@ Y(recur => n => {
 ----------------------
 
 * Maybe I do one big one, they do several small ones that add up to the big one?
+
+The way to create primitives in the lambda calculus is to ask what they are
+used for, and then make a lambda that does this. True and false are used to
+select between two options.

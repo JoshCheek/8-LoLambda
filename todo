@@ -1,6 +1,4 @@
 ----  TODO  -----
-Translate the lecture into sections
-Fill out the first several sections
 Test/write code to parse sections to state
 Test/write fn to receive events and update the state
   events:
@@ -25,5 +23,8 @@ Options:
 Keybindings for:
   run tests for each one   (what does FCC use?)
   Move to the next editor
+
+Assign the functions a name so that when we inspect them,
+  we can see their name instead of having to look at their structure
 
 Solutions in both JS and Ruby
