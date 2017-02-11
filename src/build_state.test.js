@@ -2,7 +2,7 @@
 import Build from './build_state'
 const fromMd = Build.fromMarkdownBodies
 
-describe('Building the inital state out of sections', function() {
+describe('Building the inital state out of sections', () => {
 
   it('adds the markdown files to the sections list', () => {
     expect(fromMd([]).sections.length).toEqual(0)
@@ -40,7 +40,7 @@ describe('Building the inital state out of sections', function() {
     expect(ids).toEqual(['b', 'a'])
   })
 
-  describe('currentSection', function() {
+  describe('currentSection', () => {
     it('is null', () => {
       // on null, it'll just have to discoveer the first section
       // no sense specifying that it could be set here when that same work
@@ -49,7 +49,7 @@ describe('Building the inital state out of sections', function() {
     })
   })
 
-  describe('function', function() {
+  describe('function', () => {
     it('is an empty object by default', () => {
       expect(fromMd(['META id: a', 'b']).functions).toEqual({})
     })
@@ -57,11 +57,11 @@ describe('Building the inital state out of sections', function() {
 })
 
 
-describe('Sections', function() {
+describe('Sections', () => {
   const sec = md => fromMd([md]).sections[0]
   const seg = md => sec(md).segments[0]
 
-  describe('segments', function() {
+  describe('segments', () => {
     it('allows both the section and the segments to have metadata based on whether they are the first line or not', () => {
       let section = sec(`META id: sectionID\n\nMETA id: segmentID`)
       // console.log(section)
@@ -82,7 +82,7 @@ describe('Sections', function() {
     })
   })
 
-  describe('Markdown segments', function() {
+  describe('Markdown segments', () => {
     it('sets the markdown to the segments\'s body', () => {
       expect(seg("a").body).toEqual("a")
       expect(seg("a\nb").body).toEqual("a\nb")
@@ -112,23 +112,23 @@ describe('Sections', function() {
     })
   })
 
-  describe('CodeBlock segments', function() {
+  describe('CodeBlock segments', () => {
     it('is entered in a markdown code block for js')
     it('can specify an id in its metadata')
     it('throws an error if the id collides')
     it('can specify a name in its metadata')
     it('has an initialBody of the post-metadata text')
-    context('when it has a name', function() {
+    context('when it has a name', () => {
       it('adds the id, name, and body to the state\'s functions, keyed off the id')
     })
   })
 
-  describe('Solution segments', function() {
+  describe('Solution segments', () => {
     it('must declare the CodeBlock its for in its metadata')
     it('stores the post metadata as the body')
   })
 
-  describe('Test segments', function() {
+  describe('Test segments', () => {
     it('must declare the CodeBlock its for in its metadata')
     // should it have/require id and name?
     it('stores the post metadata as the body')
