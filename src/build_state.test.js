@@ -64,11 +64,22 @@ describe('Sections', function() {
   describe('segments', function() {
     it('allows both the section and the segments to have metadata based on whether they are the first line or not', () => {
       let section = sec(`META id: sectionID\n\nMETA id: segmentID`)
+      // console.log(section)
       expect(section.id).toEqual('sectionID')
       expect(section.segments[0].id).toEqual('segmentID')
     })
 
-    it('allows each segment to have metadata')
+    it('allows each segment to have metadata', () => {
+      let section = sec("\nMETA id: id1\n```js\nMETA id: id2\n1\n```")
+      let ids = section.segments.map(seg => seg.id)
+      expect(ids).toEqual(["id1", "id2"])
+    })
+
+    it('ignores empty markdown segments (eg the blank lines between CodeBlocks)', () => {
+      let section = sec("\n\n```js\n1\n```\n\n\n```js\n2\n```\n\n")
+      let bodies = section.segments.map(seg => seg.body)
+      expect(bodies).toEqual(["1", "2"])
+    })
   })
 
   describe('Markdown segments', function() {
@@ -93,8 +104,11 @@ describe('Sections', function() {
       expect(seg(`META id: 1\n\nMETA id:2\nMETA name: whatever\na\nb`).body).toEqual(`a\nb`)
     })
 
-    xit('concludes the segment when it discovers a different kind of component', () => {
-      expect(seg("a\n```js\n1\n```\nb").body).toEqual("a")
+    it('concludes the segment when it discovers a different kind of segment', () => {
+      const bodies = sec("a\n```js\n1\n```\nb").segments.map(seg => seg.body)
+      // not sure about the newlines, we'll just do it like this for now and
+      // then fix it later if it turns out to be wrong
+      expect(bodies).toEqual(["a", "1", "b"])
     })
   })
 

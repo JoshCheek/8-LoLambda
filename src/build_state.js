@@ -1,7 +1,46 @@
 // https://facebook.github.io/jest/docs/expect.html#content
-function Build() {
-  throw("idk what this should be")
+function Build() { throw("idk what this should be") }
+export default Build
+
+// TODO: rename: stateFromMarkdownBodies
+Build.fromMarkdownBodies = function(markdownBodies) {
+  const state = {
+    functions: {
+      // id: {id, name, body}
+    },
+    sections: [],
+    currentSection: null,
+  }
+  markdownBodies.forEach(body => {
+    const section = Build.sectionFromMd(body)
+    state.sections.forEach(other => {
+      if(other.id && section.id === other.id)
+        throw(`IDs must be unique, but multiple sections had an id of ${section.id}`)
+    })
+    state.sections.push(section)
+  })
+  return state
 }
+
+
+Build.sectionFromMd = function(md) {
+  const section = {id: null, segments: [] }
+  const mdLines = md.split(`\n`)
+  extractMetadata(mdLines, section)
+
+  segmentize(mdLines).filter(hasNonEmptyLines).forEach(lines => {
+    // console.log(lines, lines.blockType)
+    const segment = {}
+    extractMetadata(lines, segment)
+    segment.body = lines.join(`\n`)
+    section.segments.push(segment)
+  })
+
+  return section
+}
+
+
+// =====  Private  =====
 
 function extractMetadata(lines, metadata) {
   let match
@@ -13,40 +52,40 @@ function extractMetadata(lines, metadata) {
     lines.shift()
 }
 
-// TODO: A section does not have a body, that's a segment
-Build.fromMarkdownBody = function(body) {
-  const section = {
-    id: null,
-    // body: "",
-    segments: [],
-  }
-  const lines = body.split(`\n`)
-  extractMetadata(lines, section)
 
-  const segment = {}
-  extractMetadata(lines, segment)
-  segment.body = lines.join(`\n`)
-  section.segments.push(segment)
+// Sort of naive, but not clear that the ones on NPM can do what I want here,
+// so just writing this thing for now
+function segmentize(lines) {
+  const segments = []
 
-  return section
-}
+  // build the segments out of the lines
+  let match, segment = []
+  segment.blockType = 'md'
 
-Build.fromMarkdownBodies = function(markdownBodies) {
-  const state = {
-    functions: {
-      // id: {id, name, body}
-    },
-    sections: [],
-    currentSection: null,
-  }
-  markdownBodies.forEach(body => {
-    const section = Build.fromMarkdownBody(body)
-    state.sections.forEach(other => {
-      if(other.id && section.id === other.id)
-        throw(`IDs must be unique, but multiple sections had an id of ${section.id}`)
-    })
-    state.sections.push(section)
+  lines.forEach(line => {
+    // block start
+    if(match = line.match(/^```(\w+.*)/)) {
+      segments.push(segment)
+      segment = []
+      segment.blockType = match[1]
+
+    // block end
+    } else if(line.match(/^```/)) {
+      segments.push(segment)
+      segment = []
+      segment.blockType = 'md'
+
+    // content within the current segment
+    } else {
+      segment.push(line)
+    }
   })
-  return state
+  segments.push(segment)
+
+  return segments
 }
-export default Build
+
+function hasNonEmptyLines(lines) {
+  const nonemptyLines = lines.filter(line => line.length)
+  return nonemptyLines.length !== 0
+}
