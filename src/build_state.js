@@ -5,12 +5,12 @@ export default Build
 // TODO: rename: stateFromMarkdownBodies
 Build.fromMarkdownBodies = function(markdownBodies) {
   const state = {
-    functions: {
-      // id: {id, name, body}
-    },
-    sections: [],
+    functions:      {},
+    sections:       [],
     currentSection: null,
   }
+
+  // build sections
   markdownBodies.forEach(body => {
     const section = Build.sectionFromMd(body)
     state.sections.forEach(other => {
@@ -19,6 +19,17 @@ Build.fromMarkdownBodies = function(markdownBodies) {
     })
     state.sections.push(section)
   })
+
+  // build functions
+  state.sections.forEach(sec => {
+    sec.segments.forEach(seg => {
+      if(seg.type === 'codeBlock' && seg.name)
+        state.functions[seg.id] = {
+          id: seg.id, name: seg.name, body: seg.body
+        }
+    })
+  })
+
   return state
 }
 
