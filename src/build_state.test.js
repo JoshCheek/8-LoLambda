@@ -131,7 +131,7 @@ describe('Sections', () => {
       expect(seg("```js\nMETA id: 1\nMETA name: myName\n```").name).toEqual('myName'))
 
     it('has an initialBody of the post-metadata text', () =>
-      expect(seg("```js\n1\n2\n```").body).toEqual('1\n2'))
+      expect(seg("```js\nMETA id: myID\n1\n2\n```").body).toEqual('1\n2'))
 
     context('when it has a name', () => {
       it('adds the id, name, and body to the state\'s functions, keyed off the id', () => {
