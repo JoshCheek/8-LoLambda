@@ -2,7 +2,7 @@
 // https://facebook.github.io/jest/docs/expect.html#content
 
 import Build from './build_state'
-const fromMd = Build.fromMarkdownBodies
+const fromMd = Build.stateFromMarkdownBodies
 
 describe('Building the inital state out of sections', () => {
   it('adds the markdown files to the sections list', () => {

@@ -3,71 +3,33 @@
 function Build() { throw("idk what this should be") }
 export default Build
 
-// TODO: rename: stateFromMarkdownBodies
-Build.fromMarkdownBodies = function(markdownBodies) {
-  const state = {
-    functions:      {},
-    sections:       [],
-    currentSection: null,
-  }
+Build.stateFromMarkdownBodies = function(markdownBodies) {
+  const state = { functions: {}, sections: [], currentSection: null }
 
-  // build sections
   markdownBodies.forEach(body => {
-    const section = Build.sectionFromMd(body)
+    const section = sectionFromMd(body)
     state.sections.forEach(other => {
       if(other.id && section.id === other.id)
-        throw(`IDs must be unique, but multiple sections had an id of ${section.id}`)
-    })
+        throw(`IDs must be unique, but multiple sections had an id of ${section.id}`)})
     section.segments.forEach(seg => {
-      if(seg.id && findSegment(state.sections, seg.id))
-        throw(`IDs must be unique, but multiple segments have an id of ${seg.id}`)
-    })
+      if(seg.id && findSegment(state, seg.id))
+        throw(`IDs must be unique, but multiple segments have an id of ${seg.id}`)})
     state.sections.push(section)
   })
 
-  // build functions
   state.sections.forEach(sec => {
     sec.segments.forEach(seg => {
-      if(seg.type === 'codeBlock' && seg.name) {
-        if(!seg.id)
-          throw(`CodeBlock ${seg.name} is missing an id`)
-        state.functions[seg.id] = {
-          id: seg.id, name: seg.name, body: seg.body
-        }
-      }
+      validateSegment(state, seg)
+      if(seg.type === 'codeBlock' && seg.name)
+        state.functions[seg.id] = {id: seg.id, name: seg.name, body: seg.body}
     })
   })
-
-  // validate solutions
-  state.sections.forEach(sec => {
-    sec.segments.forEach(seg => {
-      if(seg.type === 'solution') {
-        if(!seg.for)
-          throw(`A solution must list the id of the code block it is for`)
-        if(!findSegment(state.sections, seg.for))
-          throw(`There is a solution for ${seg.for}, but no code block with that id!`)
-      }
-    })
-  })
-
-  // validate code blocks
-  state.sections.forEach(sec => {
-    sec.segments.forEach(seg => {
-      if(seg.type === 'test') {
-        if(!seg.for)
-          throw(`A test must list the id of the code block it is for`)
-        if(!findSegment(state.sections, seg.for))
-          throw(`There is a test for ${seg.for}, but no code block with that id!`)
-      }
-    })
-  })
-
 
   return state
 }
 
 
-Build.sectionFromMd = function(md) {
+function sectionFromMd(md) {
   const section = {id: null, segments: [] }
   const mdLines = md.split(`\n`)
   extractMetadata(mdLines, section)
@@ -84,9 +46,7 @@ Build.sectionFromMd = function(md) {
   return section
 }
 
-
-// =====  Private  =====
-
+// Mutates lines!
 function extractMetadata(lines, metadata) {
   let match
   while(lines.length && (match = lines[0].match(/^META (\w+):\s*(.*)/))) {
@@ -146,10 +106,29 @@ function segmentType(observedType) {
   }
 }
 
-function findSegment(sections, id) {
-  for(let section of sections) {
+function findSegment(state, id) {
+  for(let section of state.sections) {
     let seg = section.segments.find(sec => sec.id === id)
     if(seg) return seg
   }
   return null
+}
+
+function validateSegment(state, seg) {
+  if('codeBlock' === seg.type && seg.name) {
+    if(!seg.id)
+      throw(`CodeBlock ${seg.name} is missing an id`)
+  }
+  if('solution' === seg.type) {
+    if(!seg.for)
+      throw(`A solution must list the id of the code block it is for`)
+    if(!findSegment(state, seg.for))
+      throw(`There is a solution for ${seg.for}, but no code block with that id!`)
+  }
+  if('test' === seg.type) {
+    if(!seg.for)
+      throw(`A test must list the id of the code block it is for`)
+    if(!findSegment(state, seg.for))
+      throw(`There is a test for ${seg.for}, but no code block with that id!`)
+  }
 }
