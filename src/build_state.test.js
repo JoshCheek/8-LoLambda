@@ -80,6 +80,9 @@ describe('Sections', () => {
       expect(bodies).toEqual(["1", "2"])
     })
 
+    it('does not ignore empty code block segments', () =>
+      expect(sec('```js\n```').segments.length).toEqual(1))
+
     xit('throws an error if ids collide, even across sections', () => {
     })
   })
@@ -220,6 +223,8 @@ describe('Sections', () => {
 
 
   describe('Unknown segments', () => {
-    it('throws an error')
+    it('throws an error', () =>
+      expect(() => fromMd(['```nonsense\nomg\n```']))
+        .toThrowError(/nonsense/))
   })
 })
