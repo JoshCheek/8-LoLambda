@@ -83,7 +83,10 @@ describe('Sections', () => {
     it('does not ignore empty code block segments', () =>
       expect(sec('```js\n```').segments.length).toEqual(1))
 
-    xit('throws an error if ids collide, even across sections', () => {
+    it('throws an error if ids collide, even across sections', () => {
+      expect(() => fromMd(['\nMETA id: dupID', '\nMETA id: dupID']))
+        .toThrowError(/dupID/)
+      fromMd(['\nMETA id: nonDupID1', '\nMETA id: nonDupID2'])
     })
   })
 
@@ -135,8 +138,9 @@ describe('Sections', () => {
       expect(seg("```js\nMETA id: myID\n1\n2\n```").body).toEqual('1\n2'))
 
     context('when it has a name', () => {
-      const state1 = fromMd(["```js\nMETA id: id1\nMETA name: myName\n123\n```"])
-      const state2 = fromMd(["```js\nMETA id: id2\n123\n```"])
+      let state1, state2
+      beforeEach(() => state1 = fromMd(["```js\nMETA id: id1\nMETA name: myName\n123\n```"]))
+      beforeEach(() => state2 = fromMd(["```js\nMETA id: id2\n123\n```"]))
 
       it('adds the id, name, and body to the state\'s functions, keyed off the id', () =>
         expect(state1.functions.id1)

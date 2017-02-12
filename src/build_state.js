@@ -18,6 +18,10 @@ Build.fromMarkdownBodies = function(markdownBodies) {
       if(other.id && section.id === other.id)
         throw(`IDs must be unique, but multiple sections had an id of ${section.id}`)
     })
+    section.segments.forEach(seg => {
+      if(seg.id && findSegment(state.sections, seg.id))
+        throw(`IDs must be unique, but multiple segments have an id of ${seg.id}`)
+    })
     state.sections.push(section)
   })
 
@@ -57,6 +61,7 @@ Build.fromMarkdownBodies = function(markdownBodies) {
       }
     })
   })
+
 
   return state
 }
