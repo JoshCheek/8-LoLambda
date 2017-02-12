@@ -170,18 +170,44 @@ describe('Sections', () => {
     it('explodes if the id it is for is not a code block', () =>
       expect(() => sec(mdForTarget+solForTarget)).toThrowError(/targetId/))
 
-    xit('stores the post metadata as the body', () => {
+    it('stores the post metadata as the body', () => {
+      let section = sec("```js\nMETA id: 1\n```\n```solution\nMETA for: 1\nbody1\nbody2\n```")
+      expect(section.segments[1].body).toEqual('body1\nbody2')
     })
   })
 
 
-  // describe('Test segments', () => {
-  //   it('must declare the CodeBlock its for in its metadata')
-  //   // should it have/require id and name?
-  //   it('stores the post metadata as the body')
-  //   it('has a status of pending')
-  //   it('does not get added to the functions list, even when it has an id and name')
-  // })
+  describe('Test segments', () => {
+    it('has a type of "test"', () => {
+      let section = sec("```js\nMETA id: 1\n```\n```test\nMETA for: 1\n```")
+      expect(section.segments[1].type).toEqual('test')
+    })
+
+    // should it have/require id and name?
+    const cbForTarget    = '```js\nMETA id: targetId\ncodeBody\n```\n'
+    const mdForTarget    = 'META id: targetId\n'
+    const testForTarget  = '```test\nMETA for: targetId\nsolnBody\n```\n'
+    const testForNothing = '```test\nsolnBody\n```\n'
+
+    it('must declare the CodeBlock its for in its metadata', () => {
+      sec(cbForTarget+testForTarget)
+      expect(() => sec(testForTarget)).toThrowError(/targetId/)
+    })
+
+    it('explodes if the id it is for DNE', () =>
+      expect(() => sec(cbForTarget+testForNothing)).toThrowError(/for/))
+
+    it('explodes if the id it is for is not a code block', () =>
+      expect(() => sec(mdForTarget+testForTarget)).toThrowError(/targetId/))
+
+    it('stores the post metadata as the body', () => {
+      let section = sec("```js\nMETA id: 1\n```\n```solution\nMETA for: 1\nbody1\nbody2\n```")
+      expect(section.segments[1].body).toEqual('body1\nbody2')
+    })
+
+    it('has a status of pending')
+    it('does not get added to the functions list, even when it has an id and name')
+  })
 
 
   // describe('Unknown segments', () => {

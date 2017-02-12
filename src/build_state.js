@@ -41,7 +41,19 @@ Build.fromMarkdownBodies = function(markdownBodies) {
         if(!seg.for)
           throw(`A solution must list the id of the code block it is for`)
         if(!findSegment(state.sections, seg.for))
-          throw(`There is a solution for ${seg.for}, but no codeb lock with that id!`)
+          throw(`There is a solution for ${seg.for}, but no code block with that id!`)
+      }
+    })
+  })
+
+  // validate code blocks
+  state.sections.forEach(sec => {
+    sec.segments.forEach(seg => {
+      if(seg.type === 'test') {
+        if(!seg.for)
+          throw(`A test must list the id of the code block it is for`)
+        if(!findSegment(state.sections, seg.for))
+          throw(`There is a test for ${seg.for}, but no code block with that id!`)
       }
     })
   })
@@ -119,6 +131,7 @@ function segmentType(observedType) {
   switch(observedType) {
     case "js":       return "codeBlock"
     case "solution": return "solution"
+    case "test":     return "test"
     default:
       // for the moment
   }
