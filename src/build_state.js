@@ -69,6 +69,8 @@ Build.sectionFromMd = function(md) {
 
   segmentize(mdLines).filter(hasNonEmptyLines).forEach(lines => {
     const segment = {type: segmentType(lines.type)}
+    if(segment.type === 'test')
+      segment.status = {type: 'pending'}
     extractMetadata(lines, segment)
     segment.body = lines.join(`\n`)
     section.segments.push(segment)

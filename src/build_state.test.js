@@ -205,12 +205,21 @@ describe('Sections', () => {
       expect(section.segments[1].body).toEqual('body1\nbody2')
     })
 
-    it('has a status of pending')
-    it('does not get added to the functions list, even when it has an id and name')
+    it('has a status of pending', () => {
+      const test = sec(cbForTarget + testForTarget).segments[1]
+      expect(test.status.type).toEqual('pending')
+    })
+
+    it('does not get added to the functions list, even when it has an id and name', () => {
+      const code  = '```js\nMETA id: 1\ncodeBody\n```\n'
+      const test  = '```test\nMETA id: 2\nMETA for: 1\nMETA name: some test desc\nsolnBody\n```\n'
+      const state = fromMd([code+test])
+      expect(state.functions['2']).toEqual(undefined)
+    })
   })
 
 
-  // describe('Unknown segments', () => {
-  //   it('throws an error')
-  // })
+  describe('Unknown segments', () => {
+    it('throws an error')
+  })
 })
