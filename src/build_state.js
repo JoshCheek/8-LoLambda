@@ -3,6 +3,7 @@
 function Build() { throw("idk what this should be") }
 export default Build
 
+// TODO: just export a fn?
 Build.stateFromMarkdownBodies = function(markdownBodies) {
   const state = { functions: {}, sections: [], currentSection: null }
 

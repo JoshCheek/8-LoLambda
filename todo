@@ -1,5 +1,4 @@
 ----  TODO  -----
-Test/write code to parse sections to state
 Test/write fn to receive events and update the state
   events:
     run test (id, body)
