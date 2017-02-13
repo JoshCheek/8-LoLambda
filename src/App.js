@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-// import CodeMirror from 'react-codemirror'
+import CodeMirror from 'react-codemirror'
 import './App.sass'
 
 import 'codemirror/lib/codemirror.css'
@@ -12,6 +12,7 @@ import 'codemirror/mode/javascript/javascript.js'
 
 
 class Navbar extends Component {
+  // <a className="PageLink" key={index} onClick={() => this.props.setPage(page)}>
   render() {
     const links = this.props.sections.map((sec, index) =>
       <a className="SectionLink" key={index}>
@@ -19,60 +20,77 @@ class Navbar extends Component {
       </a>)
     return <div className="Navbar">{links}</div>
   }
+}
 
-  // buildPageLink(page, index) {
-  //   return <a className="PageLink" key={index} onClick={() => this.props.setPage(page)}>
-  //     {page.name}
-  //   </a>
-  // }
+class MarkdownSegment extends Component {
+  // dangerouslySetInnerHTML={{ __html: "<p>hi</p>"}} />
+  render() {
+    return <div className="MarkdownSegment">
+      {this.props.segment.body}
+    </div>
+  }
+}
+
+class CodeBlockSegment extends Component {
+  constructor(props) {
+    super(props)
+    // id, name?, body,
+    this.state = {
+      code: this.props.segment.body, // iffy
+      options: {
+        lineNumbers: true,
+        autofocus:   false, // maybe provide this in the metadata?
+        mode:        "javascript",
+        theme:       'solarized',
+      },
+    }
+  }
+
+  updateCode(newCode) {
+    this.setState({code: newCode})
+  }
+  render() {
+    return <CodeMirror
+      value={this.state.code}
+      onChange={(code) => this.updateCode(code)}
+      options={this.state.options}
+    />
+  }
 }
 
 class Section extends Component {
-  // constructor(props) {
-  //   super(props)
-  //   id, segments
-  //   this.state = {
-  //     code: `// Code\n(a) => a * a`,
-  //     options: {
-  //       lineNumbers: true,
-  //       autofocus:   true,
-  //       mode:        "javascript",
-  //       theme:       'solarized',
-  //     },
-  //   }
-  // }
-  // updateCode(newCode) {
-  //   this.setState({code: newCode})
-  // }
+  buildSegment(segProps, key) {
+    switch(segProps.type) {
+      case "md":
+        return <MarkdownSegment key={key} segment={segProps} />
+      case "codeBlock":
+        return <CodeBlockSegment key={key} segment={segProps} />
+      case "solution":
+        // FIXME: maybe should be a hidden immutable code block, idk.
+        // For now, just ignore it
+        return null
+      case "test":
+        // FIXME: should have some sort of display that's like
+        // the output of a test framework
+        return null
+      default:
+        throw(`Wat type is this: ${segProps.type}`)
+    }
+  }
+
   render() {
     const section = this.props.section
-    const segment = section.segments[0]
-    console.log(segment)
     return <div className="Section">
-      {segment.body}
+      {section.segments.map(this.buildSegment)}
     </div>
-      // dangerouslySetInnerHTML={{
-      //   __html:
-      // }} />
-
-    // const page = this.props.page
-    // return <div className="Page">
-    //   <h2>{page.name}</h2>
-    //   <p>{page.content}</p>
-    //   <CodeMirror value={this.state.code}
-    //               onChange={(code) => this.updateCode(code)}
-    //               options={this.state.options}
-    //   />
-    // </div>
   }
 }
 
 class App extends Component {
   render() {
     const appState = this.props.appState
-    const crntIdx  = appState.currentSection || 0
+    const crntIdx  = appState.currentSection || 6
     const current  = appState.sections[crntIdx]
-    console.log(current)
 
     return <div className="App">
       <Navbar sections={appState.sections} current={current} />

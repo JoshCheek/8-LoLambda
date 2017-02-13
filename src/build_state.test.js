@@ -134,6 +134,7 @@ describe('Sections', () => {
       expect(seg("```js\nMETA id: 1\nMETA name: myName\n```").name)
         .toEqual('myName'))
 
+    // FIXME (this is looking at body rather than initialBody)
     it('has an initialBody of the post-metadata text', () =>
       expect(seg("```js\nMETA id: myID\n1\n2\n```").body).toEqual('1\n2'))
 

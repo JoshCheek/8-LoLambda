@@ -1,5 +1,8 @@
 ----  TODO  -----
-Do require sections to have an id and linkName
+Render html instead of markdown as a string
+CodeBocks background is too large (also too bright, but w/e)
+Require sections to have an id and linkName
+
 Test/write fn to receive events and update the state
   events:
     run test (id, body)
