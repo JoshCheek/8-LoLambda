@@ -32,6 +32,10 @@ Build.stateFromMarkdownBodies = function(markdownBodies) {
 
 function sectionFromMd(md) {
   const section = {id: null, segments: [] }
+
+  if(!md.split)
+    console.log(md)
+
   const mdLines = md.split(`\n`)
   extractMetadata(mdLines, section)
 

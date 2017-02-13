@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import CodeMirror from 'react-codemirror'
 import './App.sass'
+
 import 'codemirror/lib/codemirror.css'
 
 import 'codemirror/theme/base16-light.css'
@@ -61,7 +62,7 @@ class App extends Component {
       },
       currentPageIndex: 0,
       pages: [
-        { name: "Name 1", content: "First content" },
+        { name: "Name 1", content: JSON.stringify(props.appState) },
         { name: "Name 2", content: "Second content" },
       ],
     }
