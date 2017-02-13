@@ -14,7 +14,7 @@ import 'codemirror/mode/javascript/javascript.js'
 class Navbar extends Component {
   render() {
     const links = this.props.sections.map((sec, index) =>
-      <a className="PageLink" key={index}>
+      <a className="SectionLink" key={index}>
         {sec.segments[0].body.split("\n")[0]}
       </a>)
     return <div className="Navbar">{links}</div>
@@ -27,7 +27,7 @@ class Navbar extends Component {
   // }
 }
 
-class Page extends Component {
+class Section extends Component {
   // constructor(props) {
   //   super(props)
   //   id, segments
@@ -45,10 +45,10 @@ class Page extends Component {
   //   this.setState({code: newCode})
   // }
   render() {
-    const page = this.props.page
-    const segment = page.segments[0]
+    const section = this.props.section
+    const segment = section.segments[0]
     console.log(segment)
-    return <div className="Page">
+    return <div className="Section">
       {segment.body}
     </div>
       // dangerouslySetInnerHTML={{
@@ -76,7 +76,7 @@ class App extends Component {
 
     return <div className="App">
       <Navbar sections={appState.sections} current={current} />
-      <Page page={current}/>
+      <Section section={current}/>
     </div>
   }
 }
