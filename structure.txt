@@ -5,7 +5,7 @@ state:
 
 Section:
   id
-  segment: [Component]  // generated from markdown
+  segments: [Component]  // generated from markdown
   virtual:
     completedTests
 
@@ -13,7 +13,7 @@ Segment = Markdown | CodeBlock | Solution | Test
 
 Markdown:
   id
-  rawMarkdown
+  body
 
 CodeBlock:
   // if it has a name then its body gets exported to the state's fns

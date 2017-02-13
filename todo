@@ -1,4 +1,5 @@
 ----  TODO  -----
+Do require sections to have an id and linkName
 Test/write fn to receive events and update the state
   events:
     run test (id, body)
