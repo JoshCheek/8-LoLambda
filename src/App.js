@@ -103,7 +103,7 @@ class Section extends Component {
 class App extends Component {
   render() {
     const appState = this.props.appState
-    const crntIdx  = appState.currentSection || 6 // FIXME: Don't default to page 6 :P
+    const crntIdx  = appState.currentSection || 3 // FIXME: Don't default to page 6 :P
     const current  = appState.sections[crntIdx]
 
     return <div className="App">

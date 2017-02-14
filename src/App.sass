@@ -48,14 +48,18 @@ h1, h2, h3, h4, h5
   line-height:      1.4em
 
 .ReactCodeMirror
+  // Lets it grow until it hits some max size (about 20 lines)
   .CodeMirror
     height: auto
-
   .CodeMirror .CodeMirror-scroll
     max-height: 30em
+
+  .CodeMirror-line
+    padding-left: 0.5em
 
   $gutterColor: lighten($color1, 10%) // $color4 looks okay here, too
   .CodeMirror-gutters .CodeMirror-gutter
     background-color: $gutterColor
   .CodeMirror-linenumber
     color: mix($color4, $gutterColor)
+
