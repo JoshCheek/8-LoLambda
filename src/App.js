@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import CodeMirror from 'react-codemirror'
+import CodeMirror           from 'react-codemirror'
+import ReactMarkdown        from 'react-markdown'
 import './App.sass'
 
 import 'codemirror/lib/codemirror.css'
@@ -23,11 +24,13 @@ class Navbar extends Component {
 }
 
 class MarkdownSegment extends Component {
-  // dangerouslySetInnerHTML={{ __html: "<p>hi</p>"}} />
   render() {
-    return <div className="MarkdownSegment">
-      {this.props.segment.body}
-    </div>
+    // dangerouslySetInnerHTML={{ __html: "<p>hi</p>"}} />
+    // className="MarkdownSegment"
+    return <ReactMarkdown
+      containerProps={{className: "MarkdownSegment"}}
+      source={this.props.segment.body}
+    />
   }
 }
 
