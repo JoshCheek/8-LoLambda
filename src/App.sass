@@ -1,11 +1,13 @@
 /* Coolors Exported Palette - coolors.co/ead38c-d6977a-af705f-66432b-442c2e */
 
 /* RGB */
-$color1: rgba(234, 211, 140, 1);
-$color2: rgba(214, 151, 122, 1);
-$color3: rgba(175, 112, 95, 1);
-$color4: rgba(102, 67, 43, 1);
-$color5: rgba(68, 44, 46, 1);
+$color1: rgba(234, 211, 140, 1)
+$color2: rgba(214, 151, 122, 1)
+$color3: rgba(175, 112, 95, 1)
+$color4: rgba(102, 67, 43, 1)
+$color5: rgba(68, 44, 46, 1)
+
+$myGreen: rgba(110, 130, 10, 1)
 
 body
   // color:            $color5
@@ -22,15 +24,19 @@ body
   display:          flex
 
 .Navbar
-  color:            $color1
+  // color:            $color1
+  color:            lighten($myGreen, 10%)
   background-color: $color4
   padding:          1.5em
 
   .SectionLink
-    width:   15em
+    width:   13em
     display: block
     & + .SectionLink
-      margin-top:   0.5em
+      margin-top:   1em
+
+h1, h2, h3, h4, h5
+  color: $myGreen
 
 .Section
   flex-grow:        1
@@ -38,7 +44,7 @@ body
   justify-content:  center
   flex-direction:   row
   align-items:      stretch
-  font-size:        1.5em
+  font-size:        1.7em
   line-height:      1.4em
 
 .ReactCodeMirror
@@ -48,5 +54,8 @@ body
   .CodeMirror .CodeMirror-scroll
     max-height: 30em
 
+  $gutterColor: lighten($color1, 10%) // $color4 looks okay here, too
   .CodeMirror-gutters .CodeMirror-gutter
-    background-color: lighten($color1, 10%)
+    background-color: $gutterColor
+  .CodeMirror-linenumber
+    color: mix($color4, $gutterColor)
