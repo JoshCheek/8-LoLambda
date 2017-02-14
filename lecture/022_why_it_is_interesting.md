@@ -1,3 +1,6 @@
+META id: whyInteresting
+META name: Why it's interesting
+
 Why the lambda calculus is interesting
 --------------------------------------
 

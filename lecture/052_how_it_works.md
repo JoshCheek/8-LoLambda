@@ -1,3 +1,6 @@
+META id: howItWorks
+META name: The mechanics
+
 How the lambda calculus works
 -----------------------------
 

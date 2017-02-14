@@ -1,3 +1,6 @@
+META id: letThereBeBooleans
+META name: Let there be booleans
+
 Let there be booleans
 ---------------------
 

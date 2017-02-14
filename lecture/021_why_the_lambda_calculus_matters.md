@@ -1,3 +1,6 @@
+META id: whyMatters
+META name: Why it matters
+
 Why the lambda calculus matters
 -------------------------------
 

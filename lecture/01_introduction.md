@@ -1,5 +1,8 @@
-8L Ambda
-========
+META id: intro
+META name: 8-LoLambda
+
+8-LoLambda
+==========
 
 The Lambda Calculus for 8LU
 

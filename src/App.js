@@ -16,19 +16,17 @@ import 'codemirror/mode/javascript/javascript.js'
 class Navbar extends Component {
   // <a className="PageLink" key={index} onClick={() => this.props.setPage(page)}>
   render() {
-    const links = this.props.sections.map((sec, index) => {
-      const text = sec.segments[0].body.split("\n")[0]
+    return <div className="Navbar">{
+      this.props.sections.map((sec, index) => this.linkFor(sec, index))
+    }</div>
+  }
 
-      const classes = classNames({
-        SectionLink: true,
-        current: (text === 'Let there be booleans') // FIXME: placeholder
-                 // (sec.id === this.props.current.id)
-      })
-      return <a className={classes} key={index}>
-        {text}
-      </a>
+  linkFor(section, index) {
+    const classes = classNames({
+      SectionLink: true,
+      current: section.id === this.props.current.id,
     })
-    return <div className="Navbar">{links}</div>
+    return <a className={classes} key={index}>{section.name}</a>
   }
 }
 

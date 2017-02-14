@@ -1,3 +1,6 @@
+META id: defineLambdaCalc
+META name: Define "lambda calculus"
+
 Definition of the lambda calculus
 ---------------------------------
 
