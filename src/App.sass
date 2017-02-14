@@ -24,16 +24,19 @@ body
   display:          flex
 
 .Navbar
-  // color:            $color1
   color:            lighten($myGreen, 10%)
   background-color: $color4
-  padding:          1.5em
-
+  padding:          1em 0
   .SectionLink
     width:   13em
     display: block
-    & + .SectionLink
-      margin-top:   1em
+    padding: 0.5em 1.5em
+  .current
+    color:            $color4
+    // font-weight:      bold
+    background-color: $color1
+    // background-color: mix($color1, $color4)
+    // background: linear-gradient(90deg, mix($color1, $color4) , $color1)
 
 h1, h2, h3, h4, h5
   color: $myGreen

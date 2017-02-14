@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import CodeMirror           from 'react-codemirror'
 import ReactMarkdown        from 'react-markdown'
+import classNames           from 'classnames'
+
 import './App.sass'
 
 import 'codemirror/lib/codemirror.css'
-
 import 'codemirror/theme/base16-light.css'
 import 'codemirror/theme/monokai.css'
 import 'codemirror/theme/solarized.css'
@@ -15,10 +16,18 @@ import 'codemirror/mode/javascript/javascript.js'
 class Navbar extends Component {
   // <a className="PageLink" key={index} onClick={() => this.props.setPage(page)}>
   render() {
-    const links = this.props.sections.map((sec, index) =>
-      <a className="SectionLink" key={index}>
-        {sec.segments[0].body.split("\n")[0]}
-      </a>)
+    const links = this.props.sections.map((sec, index) => {
+      const text = sec.segments[0].body.split("\n")[0]
+
+      const classes = classNames({
+        SectionLink: true,
+        current: (text === 'Let there be booleans') // FIXME: placeholder
+                 // (sec.id === this.props.current.id)
+      })
+      return <a className={classes} key={index}>
+        {text}
+      </a>
+    })
     return <div className="Navbar">{links}</div>
   }
 }
@@ -103,7 +112,7 @@ class Section extends Component {
 class App extends Component {
   render() {
     const appState = this.props.appState
-    const crntIdx  = appState.currentSection || 3 // FIXME: Don't default to page 6 :P
+    const crntIdx  = appState.currentSection || 6 // FIXME: Don't default to page 6 :P
     const current  = appState.sections[crntIdx]
 
     return <div className="App">
