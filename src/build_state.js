@@ -31,13 +31,12 @@ Build.stateFromMarkdownBodies = function(markdownBodies) {
 
 
 function sectionFromMd(md) {
-  const section = {id: null, segments: [] }
-
-  if(!md.split)
-    console.log(md)
+  const section = {id: null, name: null, segments: [] }
 
   const mdLines = md.split(`\n`)
   extractMetadata(mdLines, section)
+  if(!section.id)   throw(`Sections require an id!\n\n${mdLines.join("\n")}`)
+  if(!section.name) throw(`Section ${section.id} has no name!`)
 
   segmentize(mdLines).filter(notEmptyMd).forEach(lines => {
     const segment = {type: lines.type}

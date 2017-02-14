@@ -2,7 +2,9 @@
 // https://facebook.github.io/jest/docs/expect.html#content
 
 import Build from './build_state'
-const fromMd = Build.stateFromMarkdownBodies
+const fromMdDefault = Build.stateFromMarkdownBodies
+const fromMd = mds =>
+  fromMdDefault(mds.map((md, i) => `META id: ${i}\nMETA name: ${i}\n${md}`))
 
 describe('Building the inital state out of sections', () => {
   it('adds the markdown files to the sections list', () => {
@@ -11,33 +13,44 @@ describe('Building the inital state out of sections', () => {
     expect(fromMd(['a', 'b']).sections.length).toEqual(2)
   })
 
-  it('allows the section to declare an id with initial lines of "META id: sectionId"', () => {
-    let idFor = md => fromMd([md]).sections[0].id
-    expect(idFor(`abc`)).toEqual(null)
-    expect(idFor(`META id: customId\nabc`)).toEqual('customId')
+  it('requires the section to declare an id with initial lines of "META id: sectionId"', () => {
+    let idFor = md => fromMdDefault([md]).sections[0].id
+    expect(() => idFor(`META name: n\nabc`)).toThrowError(/\bid\b/)
+    expect(idFor(`META id: customId\nMETA name: n\nabc`)).toEqual('customId')
   })
 
   // it('throws on unknown metadata')  // idk if I actually want this
 
   it('throws an error if provided ids collide', () => {
-    // not provided, no collision
-    fromMd(['a', 'a'])
-
     // provided but different
     fromMd(['META id: theId\na', 'META id: notTheId\na'])
 
     // how do I assert that it should collide here?
-    expect(() => fromMd(['META id: theId\na', 'META id: theId\na']))
-      .toThrowError(/theId/)
+    expect(() => fromMdDefault([
+      'META id: theId\nMETA name: a',
+      'META id: theId\nMETA name: b',
+    ])).toThrowError(/theId/)
+  })
+
+  it('requires the section to declare a linkName for the navbar', () => {
+    let nameFor = md => fromMdDefault([md]).sections[0].name
+    expect(() => nameFor(`META id: a\nabc`)).toThrowError(/\bname\b/)
+    expect(nameFor(`META id: a\nMETA name: some name\nabc`)).toEqual('some name')
   })
 
   it('adds the markdown files to the sections in the order they are provided', () => {
     let ids
 
-    ids = fromMd(['META id: a', 'META id: b']).sections.map(sec => sec.id)
+    ids = fromMdDefault([
+      'META id: a\nMETA name: a',
+      'META id: b\nMETA name: b',
+    ]).sections.map(sec => sec.id)
     expect(ids).toEqual(['a', 'b'])
 
-    ids = fromMd(['META id: b', 'META id: a']).sections.map(sec => sec.id)
+    ids = fromMdDefault([
+      'META id: b\nMETA name: b',
+      'META id: a\nMETA name: a',
+    ]).sections.map(sec => sec.id)
     expect(ids).toEqual(['b', 'a'])
   })
 
@@ -49,9 +62,9 @@ describe('Building the inital state out of sections', () => {
       expect(fromMd(['META id: a']).currentSection).toEqual(null))
   })
 
-  describe('function', () => {
+  describe('functions', () => {
     it('is an empty object by default', () =>
-      expect(fromMd(['META id: a', 'b']).functions).toEqual({}))
+      expect(fromMd(['']).functions).toEqual({}))
   })
 })
 
