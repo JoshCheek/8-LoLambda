@@ -26,7 +26,11 @@ class Navbar extends Component {
       SectionLink: true,
       current: section.id === this.props.current.id,
     })
-    return <a className={classes} key={index}>{section.name}</a>
+    return <a
+      className={classes}
+      key={index}
+      onClick={() => this.props.setCurrent(section.id)}
+    >{section.name}</a>
   }
 }
 
@@ -110,11 +114,10 @@ class Section extends Component {
 class App extends Component {
   render() {
     const appState = this.props.appState
-    const crntIdx  = appState.currentSection || 6 // FIXME: Don't default to page 6 :P
-    const current  = appState.sections[crntIdx]
+    const current  = appState.sections.find(sec => sec.id === appState.currentSection)
 
     return <div className="App">
-      <Navbar sections={appState.sections} current={current} />
+      <Navbar sections={appState.sections} current={current} setCurrent={this.props.setCurrent} />
       <Section section={current}/>
     </div>
   }

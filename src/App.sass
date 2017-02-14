@@ -26,15 +26,17 @@ body
 .Navbar
   color:            lighten($myGreen, 10%)
   background-color: $color4
-  padding:          1em 0
+  padding:          1em 0 1em 0.5em
   .SectionLink
     width:   13em
     display: block
     padding: 0.5em 1.5em
-  .current
+  .SectionLink.current
     color:            $color4
-    // font-weight:      bold
+    font-weight:      bold
     background-color: $color1
+    $rad: 2em
+    border-radius:    $rad 0 0 $rad
     // background-color: mix($color1, $color4)
     // background: linear-gradient(90deg, mix($color1, $color4) , $color1)
 
