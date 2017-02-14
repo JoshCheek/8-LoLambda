@@ -17,10 +17,6 @@ body
   color:            $color4
   background-color: $color1
 
-// there's a little nub at the bottom and I can't figure out where it's coming from -.-
-.CodeMirror-gutters .CodeMirror-gutter
-  background-color: lighten($color1, 10%)
-
 .App
   height:           100%
   display:          flex
@@ -30,10 +26,11 @@ body
   background-color: $color4
   padding:          1.5em
 
-.SectionLink
-  display: block
-  & + .SectionLink
-    margin-top:       0.5em
+  .SectionLink
+    width:   15em
+    display: block
+    & + .SectionLink
+      margin-top:   0.5em
 
 .Section
   flex-grow:        1
@@ -41,3 +38,15 @@ body
   justify-content:  center
   flex-direction:   row
   align-items:      stretch
+  font-size:        1.5em
+  line-height:      1.4em
+
+.ReactCodeMirror
+  .CodeMirror
+    height: auto
+
+  .CodeMirror .CodeMirror-scroll
+    max-height: 30em
+
+  .CodeMirror-gutters .CodeMirror-gutter
+    background-color: lighten($color1, 10%)

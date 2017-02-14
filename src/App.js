@@ -27,6 +27,7 @@ class MarkdownSegment extends Component {
   render() {
     // dangerouslySetInnerHTML={{ __html: "<p>hi</p>"}} />
     // className="MarkdownSegment"
+    // Options are at https://github.com/rexxars/react-markdown#options
     return <ReactMarkdown
       containerProps={{className: "MarkdownSegment"}}
       source={this.props.segment.body}
@@ -40,11 +41,21 @@ class CodeBlockSegment extends Component {
     // id, name?, body,
     this.state = {
       code: this.props.segment.body, // iffy
+      // preserveScrollPosition: true,
+
+      // Options are at https://codemirror.net/doc/manual.html#config
       options: {
-        lineNumbers: true,
-        autofocus:   false, // maybe provide this in the metadata?
-        mode:        "javascript",
-        theme:       'solarized',
+        lineNumbers:        true,
+        mode:               "javascript",
+        theme:              'solarized',
+        autofocus:          false,        // maybe provide this in the metadata?
+        scrollbarStyle:     null,         // hide scrollbars
+        cursorScrollMargin: 40,           // scrolls 2 lines before the edge
+
+        // other maybe useful options:
+        // readOnly:      true,
+        // keymap: ...,
+        // extraKeys ...,
       },
     }
   }
@@ -92,7 +103,7 @@ class Section extends Component {
 class App extends Component {
   render() {
     const appState = this.props.appState
-    const crntIdx  = appState.currentSection || 6
+    const crntIdx  = appState.currentSection || 6 // FIXME: Don't default to page 6 :P
     const current  = appState.sections[crntIdx]
 
     return <div className="App">
