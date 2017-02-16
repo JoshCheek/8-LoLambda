@@ -72,24 +72,38 @@ class CodeBlockSegment extends Component {
     }
   }
 
-  updateCode(newCode) {
+  setCode(newCode) {
     this.setState({code: newCode})
   }
 
+  segmentId() {
+    return this.props.segment.id
+  }
+
+  saveCode(code) {
+    this.setCode(code)
+    this.props.saveCode(this.segmentId(), code)
+  }
+
+  runTests() {
+    // FIXME
+  }
+
+  reset() {
+    this.saveCode(this.props.segment.body)
+  }
+
   render() {
-    const id = this.props.segment.id
-    const runTests = () => { }
-    const reset = () => this.props.saveCode(id, this.props.segment.body)
     return <div className="CodeBlock">
       <CodeMirror
         value={this.state.code}
-        onChange={(code) => this.updateCode(code)}
+        onChange={(code) => this.setCode(code)}
         options={this.state.options}
       />
       <div className="buttons">
-        <button onClick={() => runTests(id)}>Run Tests</button>
-        <button onClick={() => this.props.saveCode(id, this.state.code)}>Save</button>
-        <button onClick={() => reset(id)}>Reset</button>
+        <button onClick={() => this.runTests()}>Run Tests</button>
+        <button onClick={() => this.saveCode(this.state.code)}>Save</button>
+        <button onClick={() => this.reset()}>Reset</button>
       </div>
     </div>
   }
