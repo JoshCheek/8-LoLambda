@@ -86,7 +86,10 @@ class CodeBlockSegment extends Component {
   }
 
   runTests() {
-    // FIXME
+    this.props.runTests(this.segmentId(), this.state.code)
+    // We should see the original status and after updating
+    // them to pass, we should see that they pass (ie red to green,
+    // hopefully with a helpful message)
   }
 
   reset() {
@@ -109,6 +112,28 @@ class CodeBlockSegment extends Component {
   }
 }
 
+class TestSegment extends Component {
+  render() {
+    const segment = this.props.segment
+    const classes = classNames({
+      TestSegment:           true,
+      [segment.status.type]: true,
+    })
+    return <div className={classes}>
+      {this.renderName()}
+      {this.renderCode()}
+    </div>
+  }
+
+  renderName() {
+    return <div>{this.props.segment.name}</div>
+  }
+  renderCode() {
+    // FIXME: toggle visibility and hilight?
+    return <pre>{this.props.segment.body}</pre>
+  }
+}
+
 class Section extends Component {
   buildSegment(segProps, key) {
     // console.log({omg: this.props.saveCode})
@@ -116,25 +141,32 @@ class Section extends Component {
       case "md":
         return <MarkdownSegment key={key} segment={segProps} />
       case "codeBlock":
-        return <CodeBlockSegment appState={this.props.appState} key={key} segment={segProps} saveCode={this.props.saveCode} />
-        // return <CodeBlockSegment key={key} segment={segProps} saveCode={this.props.saveCode} />
+        return <CodeBlockSegment
+          appState={this.props.appState}
+          key={key}
+          segment={segProps}
+          saveCode={this.props.saveCode}
+          runTests={this.props.runTests}
+        />
       case "solution":
         // FIXME: maybe should be a hidden immutable code block, idk.
         // For now, just ignore it
         return null
       case "test":
-        // FIXME: should have some sort of display that's like
-        // the output of a test framework
-        return null
+        return <TestSegment
+          appState={this.props.appState}
+          key={key}
+          segment={segProps}
+        />
       default:
         throw(`Wat type is this: ${segProps.type}`)
     }
   }
 
   render() {
-    const section = this.props.section
+    const build = (seg, idx) => this.buildSegment(seg, idx)
     return <div className="Section">
-      {section.segments.map((seg, idx) => this.buildSegment(seg, idx))}
+      {this.props.section.segments.map(build)}
     </div>
   }
 }
@@ -147,7 +179,12 @@ class App extends Component {
 
     return <div className="App">
       <Navbar sections={appState.sections} current={current} setCurrent={this.props.setCurrent} />
-      <Section appState={appState} section={current} saveCode={this.props.saveCode} />
+      <Section
+        appState={appState}
+        section={current}
+        saveCode={this.props.saveCode}
+        runTests={this.props.runTests}
+      />
     </div>
   }
 }

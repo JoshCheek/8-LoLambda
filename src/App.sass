@@ -80,3 +80,13 @@ $gutterColor: lighten($color1, 10%) // $color4 looks okay here, too
     background-color: $gutterColor
   .CodeMirror-linenumber
     color: mix($color4, $gutterColor)
+
+.TestSegment
+  margin-top: 0.5em
+  padding: 0.2em 0.5em
+  + .TestSegment
+    margin-top: 0.3em
+  &.pending
+    background: #FB5
+  pre
+    margin: 0
