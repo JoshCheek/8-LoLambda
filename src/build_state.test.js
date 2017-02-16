@@ -101,6 +101,21 @@ describe('Sections', () => {
         .toThrowError(/dupID/)
       fromMd(['\nMETA id: nonDupID1', '\nMETA id: nonDupID2'])
     })
+
+    it('assigns a unique id to the segment if none was provided', () => {
+      let segments = []
+      fromMd(['```js\na\n```\n```js\nb\n```', '```js\nc\n```'])
+        .sections.forEach(sec =>
+          segments = segments.concat(sec.segments))
+
+      const bodies = segments.map(s => s.body)
+      expect(bodies).toEqual(['a', 'b', 'c'])
+
+      const ids = segments.map(s => s.id)
+      expect(ids[0]).not.toEqual(ids[1])
+      expect(ids[0]).not.toEqual(ids[2])
+      expect(ids[1]).not.toEqual(ids[2])
+    })
   })
 
   describe('Markdown segments', () => {
@@ -161,10 +176,6 @@ describe('Sections', () => {
           .toEqual({id: 'id1', name: 'myName', body: '123'}) ||
         expect(state2.functions.id2)
           .toEqual(undefined))
-
-      it('throws an error if it does not also have an id', () =>
-        expect(() => fromMd(["```js\nMETA name: myName\n123\n```"]))
-          .toThrowError(/myName/))
     })
   })
 

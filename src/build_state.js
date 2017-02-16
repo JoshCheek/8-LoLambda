@@ -5,6 +5,9 @@ export default Build
 
 // TODO: just export a fn?
 Build.stateFromMarkdownBodies = function(markdownBodies) {
+  let uidNum = 1
+  const newUid = () => `__internal_id_${uidNum++}`
+
   const state = { functions: {}, sections: [], currentSection: null }
 
   markdownBodies.forEach(body => {
@@ -14,7 +17,9 @@ Build.stateFromMarkdownBodies = function(markdownBodies) {
         throw(`IDs must be unique, but multiple sections had an id of ${section.id}`)})
     section.segments.forEach(seg => {
       if(seg.id && findSegment(state, seg.id))
-        throw(`IDs must be unique, but multiple segments have an id of ${seg.id}`)})
+        throw(`IDs must be unique, but multiple segments have an id of ${seg.id}`)
+      if(!seg.id) seg.id = newUid()
+    })
     state.sections.push(section)
   })
 
@@ -35,6 +40,7 @@ function sectionFromMd(md) {
 
   const mdLines = md.split(`\n`)
   extractMetadata(mdLines, section)
+  // FIXME: they don't really need an id now that we have it autogenerating
   if(!section.id)   throw(`Sections require an id!\n\n${mdLines.join("\n")}`)
   if(!section.name) throw(`Section ${section.id} has no name!`)
 
@@ -118,11 +124,7 @@ function findSegment(state, id) {
   return null
 }
 
-function validateSegment(state, seg) {
-  if('codeBlock' === seg.type && seg.name) {
-    if(!seg.id)
-      throw(`CodeBlock ${seg.name} is missing an id`)
-  }
+function validateSegment(state, seg, newUid) {
   if('solution' === seg.type) {
     if(!seg.for)
       throw(`A solution must list the id of the code block it is for`)
