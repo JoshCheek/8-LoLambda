@@ -79,8 +79,7 @@ class CodeBlockSegment extends Component {
   render() {
     const id = this.props.segment.id
     const runTests = () => { }
-    const reset = () => { }
-    // console.log({id: id, saveCode: this.props.saveCode})
+    const reset = () => this.props.saveCode(id, this.props.segment.body)
     return <div className="CodeBlock">
       <CodeMirror
         value={this.state.code}
