@@ -4,17 +4,22 @@ import App from './App'
 import './index.css'
 import initialState from '../lecture/lecture.json'
 
+// import std from 'browser-stdout'
+// import Mocha from 'mocha/browser-entry'
+// import Suite   from 'mocha/lib/suite'
+// import Context from 'mocha/lib/suite'
+// import Mocha   from 'mocha/lib/mocha'
+
+
 let state = initialState
 if(!state.currentSection) state.currentSection = state.sections[0].id
 state.currentSection = 'letThereBeBooleans'
-console.log(state)
 
 const root = document.getElementById('root')
 
 render()
 
 function render() {
-  console.log(state)
   ReactDOM.render(
     <App
       appState={state}
@@ -51,7 +56,8 @@ function runTests(codeId, body) {
   // },
   testsFor(codeId).forEach(test =>
     setTimeout(() => {
-      runAndSaveTest(test)
+      const result = runTest(test, body)
+      // FIXME: update the result
       render()
     }, 0))
 }
@@ -66,8 +72,13 @@ function testsFor(codeId) {
   return tests
 }
 
-function runAndSaveTest(test) {
-  console.log(test)
-  // run test
-  // save test result
+function runTest(test, body) {
+  // wrap the test and body in code to set the local variables
+  // eval the test and body to functions
+  // invoke the functions with the locals so they are available to the code
+  // invoke the test function with the body function
+  // catch errors (syntax and assertion)
+  // if no error, return passed status
+  // if error, return the description (eg syntax error vs failed assertion)
+  console.log(test, body)
 }

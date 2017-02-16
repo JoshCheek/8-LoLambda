@@ -1,13 +1,15 @@
 ----  TODO  -----
 Display test status
 Wire buttons up
-  save needs to save the code in the state's functions
   run needs to run the tests against it and update their state
+    (do I need to use web workers? since it could loop forever?)
 Some code will depend on previous solutions,
   some way (metadata) for them to declare what they depend on
   some way to make it available to them
 Fn to update the state
+Save state in local storage?
 Test React?
+How / where to host it?
 
 Options:
   editor style (emacs/vim/sublime/default)
