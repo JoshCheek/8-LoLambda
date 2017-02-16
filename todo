@@ -1,20 +1,14 @@
 ----  TODO  -----
-Test/write fn to receive events and update the state
-  events:
-    run test (id, body)
-    save result (id, body)
-    goto (id) // section | component
-    editCode (id, body)
-Begin trying to implement in react
-Once it begins to take shape in react
-  Start testing it
-  Reference ~/code/api-mashup
-  On the verbose branch
-  In the experiments dir
-Invite some humans (corey, michael, uhm, any others?)
+Display test status
+Wire buttons up
+  save needs to save the code in the state's functions
+  run needs to run the tests against it and update their state
+Some code will depend on previous solutions,
+  some way (metadata) for them to declare what they depend on
+  some way to make it available to them
+Fn to update the state
+Test React?
 
-
------  Other Thoughts  -----
 Options:
   editor style (emacs/vim/sublime/default)
   language (js/ruby)
@@ -25,5 +19,3 @@ Keybindings for:
 
 Assign the functions a name so that when we inspect them,
   we can see their name instead of having to look at their structure
-
-Solutions in both JS and Ruby

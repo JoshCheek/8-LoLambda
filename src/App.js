@@ -50,8 +50,9 @@ class CodeBlockSegment extends Component {
   constructor(props) {
     super(props)
     // id, name?, body,
+    const id = this.props.segment.id
     this.state = {
-      code: this.props.segment.body, // iffy
+      code: this.props.appState.functions[id].body,
       // preserveScrollPosition: true,
 
       // Options are at https://codemirror.net/doc/manual.html#config
@@ -74,22 +75,36 @@ class CodeBlockSegment extends Component {
   updateCode(newCode) {
     this.setState({code: newCode})
   }
+
   render() {
-    return <CodeMirror
-      value={this.state.code}
-      onChange={(code) => this.updateCode(code)}
-      options={this.state.options}
-    />
+    const id = this.props.segment.id
+    const runTests = () => { }
+    const reset = () => { }
+    // console.log({id: id, saveCode: this.props.saveCode})
+    return <div className="CodeBlock">
+      <CodeMirror
+        value={this.state.code}
+        onChange={(code) => this.updateCode(code)}
+        options={this.state.options}
+      />
+      <div className="buttons">
+        <button onClick={() => runTests(id)}>Run Tests</button>
+        <button onClick={() => this.props.saveCode(id, this.state.code)}>Save</button>
+        <button onClick={() => reset(id)}>Reset</button>
+      </div>
+    </div>
   }
 }
 
 class Section extends Component {
   buildSegment(segProps, key) {
+    // console.log({omg: this.props.saveCode})
     switch(segProps.type) {
       case "md":
         return <MarkdownSegment key={key} segment={segProps} />
       case "codeBlock":
-        return <CodeBlockSegment key={key} segment={segProps} />
+        return <CodeBlockSegment appState={this.props.appState} key={key} segment={segProps} saveCode={this.props.saveCode} />
+        // return <CodeBlockSegment key={key} segment={segProps} saveCode={this.props.saveCode} />
       case "solution":
         // FIXME: maybe should be a hidden immutable code block, idk.
         // For now, just ignore it
@@ -106,7 +121,7 @@ class Section extends Component {
   render() {
     const section = this.props.section
     return <div className="Section">
-      {section.segments.map(this.buildSegment)}
+      {section.segments.map((seg, idx) => this.buildSegment(seg, idx))}
     </div>
   }
 }
@@ -114,11 +129,12 @@ class Section extends Component {
 class App extends Component {
   render() {
     const appState = this.props.appState
-    const current  = appState.sections.find(sec => sec.id === appState.currentSection)
+    let current  = appState.sections.find(sec => sec.id === appState.currentSection)
+    // current = appState.sections.find(sec => sec.id === "letThereBeBooleans")
 
     return <div className="App">
       <Navbar sections={appState.sections} current={current} setCurrent={this.props.setCurrent} />
-      <Section section={current}/>
+      <Section appState={appState} section={current} saveCode={this.props.saveCode} />
     </div>
   }
 }

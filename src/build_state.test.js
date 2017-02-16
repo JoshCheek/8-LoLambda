@@ -162,20 +162,13 @@ describe('Sections', () => {
       expect(seg("```js\nMETA id: 1\nMETA name: myName\n```").name)
         .toEqual('myName'))
 
-    // FIXME (this is looking at body rather than initialBody)
-    it('has an initialBody of the post-metadata text', () =>
+    it('has an body of the post-metadata text', () =>
       expect(seg("```js\nMETA id: myID\n1\n2\n```").body).toEqual('1\n2'))
 
-    context('when it has a name', () => {
-      let state1, state2
-      beforeEach(() => state1 = fromMd(["```js\nMETA id: id1\nMETA name: myName\n123\n```"]))
-      beforeEach(() => state2 = fromMd(["```js\nMETA id: id2\n123\n```"]))
-
-      it('adds the id, name, and body to the state\'s functions, keyed off the id', () =>
-        expect(state1.functions.id1)
-          .toEqual({id: 'id1', name: 'myName', body: '123'}) ||
-        expect(state2.functions.id2)
-          .toEqual(undefined))
+    it('adds the id, name, and body to the state\'s functions, keyed off the id', () => {
+      let state = fromMd(["```js\nMETA id: id1\nMETA name: myName\n123\n```"])
+        expect(state.functions.id1)
+          .toEqual({id: 'id1', name: 'myName', body: '123'})
     })
   })
 

@@ -35,7 +35,7 @@ body
     color:            $color4
     font-weight:      bold
     background-color: $color1
-    $rad: 2em
+    $rad: 0.5em
     border-radius:    $rad 0 0 $rad
     // background-color: mix($color1, $color4)
     // background: linear-gradient(90deg, mix($color1, $color4) , $color1)
@@ -52,6 +52,20 @@ h1, h2, h3, h4, h5
   font-size:        1.7em
   line-height:      1.4em
 
+$gutterColor: lighten($color1, 10%) // $color4 looks okay here, too
+.CodeBlock
+  $buttonDist: 0.25em
+  button
+    font-size: 1em
+    margin-top: $buttonDist
+    + button
+      margin-left: $buttonDist
+    border: none
+    background-color: lighten($color1, 10%)
+    color: mix($color1, $myGreen)
+    &:focus
+      outline-color: mix($color1, $myGreen)
+
 .ReactCodeMirror
   // Lets it grow until it hits some max size (about 20 lines)
   .CodeMirror
@@ -62,9 +76,7 @@ h1, h2, h3, h4, h5
   .CodeMirror-line
     padding-left: 0.5em
 
-  $gutterColor: lighten($color1, 10%) // $color4 looks okay here, too
   .CodeMirror-gutters .CodeMirror-gutter
     background-color: $gutterColor
   .CodeMirror-linenumber
     color: mix($color4, $gutterColor)
-

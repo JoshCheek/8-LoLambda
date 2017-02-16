@@ -26,7 +26,7 @@ Build.stateFromMarkdownBodies = function(markdownBodies) {
   state.sections.forEach(sec => {
     sec.segments.forEach(seg => {
       validateSegment(state, seg)
-      if(seg.type === 'codeBlock' && seg.name)
+      if(seg.type === 'codeBlock')
         state.functions[seg.id] = {id: seg.id, name: seg.name, body: seg.body}
     })
   })
