@@ -159,7 +159,7 @@ class Section extends Component {
           segment={segProps}
         />
       default:
-        throw(`Wat type is this: ${segProps.type}`)
+        throw new Error(`Wat type is this: ${segProps.type}`)
     }
   }
 
