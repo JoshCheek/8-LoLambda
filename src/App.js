@@ -89,6 +89,7 @@ class CodeBlockSegment extends Component {
   }
 
   reset() {
+    this.props.resetTests(this.segmentId())
     this.saveCode(this.props.segment.body)
   }
 
@@ -147,6 +148,7 @@ class Section extends Component {
           segment={segProps}
           saveCode={this.props.saveCode}
           runTests={this.props.runTests}
+          resetTests={this.props.resetTests}
         />
       case "solution":
         // FIXME: maybe should be a hidden immutable code block, idk.
@@ -184,6 +186,7 @@ class App extends Component {
         section={current}
         saveCode={this.props.saveCode}
         runTests={this.props.runTests}
+        resetTests={this.props.resetTests}
       />
     </div>
   }

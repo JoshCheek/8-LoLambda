@@ -27,6 +27,7 @@ function render() {
       setCurrent={setCurrent}
       saveCode={saveCode}
       runTests={runTests}
+      resetTests={resetTests}
     />,
     root
   )
@@ -57,36 +58,44 @@ function runTests(codeBlock, body) {
   // },
   testsFor(codeBlock.id).forEach(test => {
     setTimeout(() => {
-      let segment, segmentIdx, section, sectionIdx
-
-      state.sections.forEach((sec, secIdx) => {
-        if(segment) return
-        sec.segments.forEach((seg, segIdx) => {
-          if(segment || seg.id !== test.id) return
-          section    = sec
-          sectionIdx = secIdx
-          segment    = seg
-          segmentIdx = segIdx
-        })
-      })
-
       const status = runTest(test, codeBlock, body)
-
-      const newSeg = Object.assign({}, segment, {status})
-      const newSegments = []
-      section.segments.forEach(seg => newSegments.push(seg))
-      newSegments[segmentIdx] = newSeg
-
-      const newSec = Object.assign({}, section, {segments: newSegments})
-      const newSections = []
-      state.sections.forEach(sec => newSections.push(sec))
-      newSections[sectionIdx] = newSec
-
-      state = Object.assign({}, state, {sections: newSections})
-      console.log(state)
+      updateTestStatus(test.id, status)
       render()
     }, 0)
   })
+}
+
+function resetTests(codeBlockId) {
+  testsFor(codeBlockId).forEach(test =>
+    updateTestStatus(test.id, {type: 'pending'}))
+  render()
+}
+
+function updateTestStatus(testId, status) {
+  let segment, segmentIdx, section, sectionIdx
+
+  state.sections.forEach((sec, secIdx) => {
+    if(segment) return
+    sec.segments.forEach((seg, segIdx) => {
+      if(segment || seg.id !== testId) return
+      section    = sec
+      sectionIdx = secIdx
+      segment    = seg
+      segmentIdx = segIdx
+    })
+  })
+
+  const newSeg = Object.assign({}, segment, {status})
+  const newSegments = []
+  section.segments.forEach(seg => newSegments.push(seg))
+  newSegments[segmentIdx] = newSeg
+
+  const newSec = Object.assign({}, section, {segments: newSegments})
+  const newSections = []
+  state.sections.forEach(sec => newSections.push(sec))
+  newSections[sectionIdx] = newSec
+
+  state = Object.assign({}, state, {sections: newSections})
 }
 
 function testsFor(codeId) {
