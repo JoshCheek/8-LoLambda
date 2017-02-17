@@ -130,7 +130,6 @@ class TestSegment extends Component {
     return <div className={classes}>
       {this.renderName()}
       {this.renderMessage()}
-      <hr />
       {this.renderCode()}
     </div>
   }
@@ -142,8 +141,12 @@ class TestSegment extends Component {
     if(message) return <div className="message">{message}</div>
   }
   renderCode() {
-    // toggle visibility and hilight?
-    return <CodeMirror
+    if(this.props.segment.status.type === 'pass')
+      return
+
+    return <div>
+      <hr />
+      <CodeMirror
       value={this.props.segment.body}
       onChange={(code) => this.setCode(code)}
       options={{
@@ -154,6 +157,7 @@ class TestSegment extends Component {
           readOnly:           'nocursor',
         }}
       />
+    </div>
   }
 }
 
