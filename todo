@@ -1,5 +1,4 @@
 ----  TODO  -----
-Save state in local storage?
 Some code will depend on previous solutions,
   some way (metadata) for them to declare what they depend on
   some way to make it available to them

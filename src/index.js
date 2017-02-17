@@ -4,22 +4,23 @@ import App from './App'
 import './index.css'
 import initialState from '../lecture/lecture.json'
 
-// import std from 'browser-stdout'
-// import Mocha from 'mocha/browser-entry'
-// import Suite   from 'mocha/lib/suite'
-// import Context from 'mocha/lib/suite'
-// import Mocha   from 'mocha/lib/mocha'
-
-
 let state = initialState
+const localStorageName = 'lambdaAppState'
+const rawLocalStorageState = localStorage.getItem(localStorageName)
+if(rawLocalStorageState) {
+  const localStorageState = JSON.parse(rawLocalStorageState)
+  state.functions = Object.assign({}, state.functions, localStorageState.functions)
+}
+
 if(!state.currentSection) state.currentSection = state.sections[0].id
-state.currentSection = 'letThereBeBooleans'
+state.currentSection = 'letThereBeBooleans' // FIXME: delete this, it's just for convenience of "manual testing" >.<
 
 const root = document.getElementById('root')
 
 render()
 
 function render() {
+  localStorage.setItem(localStorageName, JSON.stringify(state))
   window.state = state
   ReactDOM.render(
     <App
