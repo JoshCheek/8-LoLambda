@@ -3,12 +3,7 @@ Some code will depend on previous solutions,
   some way (metadata) for them to declare what they depend on
   some way to make it available to them
 
-Options:
-  editor style (emacs/vim/sublime/default)
-  language (js/ruby)
-
 Keybindings for:
-  run tests for each one   (what does FCC use?)
   Move to the next editor
 
 Assign the functions a name so that when we inspect them,

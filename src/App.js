@@ -58,6 +58,7 @@ class CodeBlockSegment extends Component {
       // preserveScrollPosition: true,
 
       // Options are at https://codemirror.net/doc/manual.html#config
+      // Can also provide keymap, eg for vim mode
       options: {
         lineNumbers:        true,
         mode:               "javascript",
@@ -66,10 +67,17 @@ class CodeBlockSegment extends Component {
         scrollbarStyle:     null,         // hide scrollbars
         cursorScrollMargin: 40,           // scrolls 2 lines before the edge
         readOnly:           readOnly,
+        extraKeys: {
+          // these should work for window and mac
+          'Alt-Enter': cm => this.runTests(),
+          'Alt-S':     cm => this.saveCode(),
+          'Alt-R':     cm => this.reset(),
 
-        // other maybe useful options:
-        // keymap: ...,
-        // extraKeys ...,
+          // since it's more common to use command on a mac, declare those keybindings, too
+          'Cmd-Enter': cm => this.runTests(),
+          'Cmd-S':     cm => this.saveCode(),
+          'Cmd-R':     cm => this.reset(),
+        },
       },
     }
   }
@@ -82,7 +90,7 @@ class CodeBlockSegment extends Component {
     return this.props.segment.id
   }
 
-  saveCode(code) {
+  saveCode(code=this.state.code) {
     this.setCode(code)
     this.props.saveCode(this.segmentId(), code)
   }
@@ -97,12 +105,13 @@ class CodeBlockSegment extends Component {
   }
 
   render() {
+    const kb = name => this.keybindings[name].toLowerCase()
     let buttons = null
     if(!this.props.segment.isReadOnly)
       buttons = <div className="buttons">
-        <button onClick={() => this.runTests()}>Run Tests</button>
-        <button onClick={() => this.saveCode(this.state.code)}>Save</button>
-        <button onClick={() => this.reset()}>Reset</button>
+        <button onClick={() => this.runTests()}>Run Tests (alt-enter)</button>
+        <button onClick={() => this.saveCode()}>Save (alt-s)</button>
+        <button onClick={() => this.reset()}>Reset (alt-r)</button>
       </div>
     return <div className="CodeBlock">
       <CodeMirror
