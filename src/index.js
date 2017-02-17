@@ -13,8 +13,8 @@ if(rawLocalStorageState) {
 }
 
 if(!state.currentSection) state.currentSection = state.sections[0].id
-// state.currentSection = 'letThereBeBooleans' // FIXME: delete this, it's just for convenience of "manual testing" >.<
-state.currentSection = 'intro' // FIXME: delete this, it's just for convenience of "manual testing" >.<
+state.currentSection = 'letThereBeBooleans' // FIXME: delete this, it's just for convenience of "manual testing" >.<
+// state.currentSection = 'intro' // FIXME: delete this, it's just for convenience of "manual testing" >.<
 
 const root = document.getElementById('root')
 

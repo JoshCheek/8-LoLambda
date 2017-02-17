@@ -6,12 +6,8 @@ import classNames           from 'classnames'
 import './App.sass'
 
 import 'codemirror/lib/codemirror.css'
-import 'codemirror/theme/base16-light.css'
-import 'codemirror/theme/monokai.css'
 import 'codemirror/theme/solarized.css'
-import 'codemirror/theme/hopscotch.css'
 import 'codemirror/mode/javascript/javascript.js'
-
 
 class Navbar extends Component {
   render() {
@@ -147,7 +143,17 @@ class TestSegment extends Component {
   }
   renderCode() {
     // toggle visibility and hilight?
-    return <pre>{this.props.segment.body}</pre>
+    return <CodeMirror
+      value={this.props.segment.body}
+      onChange={(code) => this.setCode(code)}
+      options={{
+        lineNumbers:        true,
+          mode:               "javascript",
+          theme:              'solarized',
+          autofocus:          false,
+          readOnly:           'nocursor',
+        }}
+      />
   }
 }
 
