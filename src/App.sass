@@ -27,14 +27,18 @@ body
     width:   13em
     display: block
     padding: 0.5em 1.5em
+    cursor: pointer
+    cursor: hand
+    &:hover
+      color: $color1
+
   .SectionLink.current
     color:            $color4
     font-weight:      bold
     background-color: $color1
+    cursor:           default
     $rad: 0.5em
     border-radius:    $rad 0 0 $rad
-    // background-color: mix($color1, $color4)
-    // background: linear-gradient(90deg, mix($color1, $color4) , $color1)
 
 h1, h2, h3, h4, h5
   color: $myGreen
