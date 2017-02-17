@@ -13,8 +13,6 @@ if(rawLocalStorageState) {
 }
 
 if(!state.currentSection) state.currentSection = state.sections[0].id
-state.currentSection = 'letThereBeBooleans' // FIXME: delete this, it's just for convenience of "manual testing" >.<
-// state.currentSection = 'intro' // FIXME: delete this, it's just for convenience of "manual testing" >.<
 
 const root = document.getElementById('root')
 
@@ -116,6 +114,8 @@ function testsFor(codeId) {
 function runTest(test, codeBlock) {
   // wrap the test and body in code to set the local variables
   let code = wrapCode(codeBlock, test.body)
+  code = (test.needs||"").split(/ +/).filter(s => s.length)
+          .reduce((inner, depId) => wrapCode(findSegment(depId), inner), code)
   console.log(code)
 
   // eval the test and body to functions
@@ -145,6 +145,7 @@ function runTest(test, codeBlock) {
 function wrapCode(codeBlock, toWrap) {
   let codeBlockBody = state.functions[codeBlock.id].body
   let wrapper = ``
+	console.log(codeBlock)
   if(codeBlock.name)
     wrapper += `const ${codeBlock.name} = (${codeBlockBody})\n`
   else

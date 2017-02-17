@@ -61,7 +61,7 @@ function IF(boolean, trueCase, falseCase) {
 ```test
 META for:  firstIf
 META name: IF with a true boolean returns the true case
-META load: firstBools, firstIf
+META needs: firstBools firstIf
 
 assertEqual('first', IF(TRUE,  'first', 'second'))
 ```
@@ -69,7 +69,7 @@ assertEqual('first', IF(TRUE,  'first', 'second'))
 ```test
 META for:  firstIf
 META name: IF with a false boolean returns the false case
-META load: firstBools, firstIf
+META needs: firstBools firstIf
 
 assertEqual('second', IF(FALSE,  'first', 'second'))
 ```

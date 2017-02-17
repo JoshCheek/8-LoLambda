@@ -9,6 +9,7 @@ in JavaScript, or what a lambda / proc / block is in Ruby,
 then you already know what a lambda is!
 
 ```js
+META id: whatIsALambda
 META isReadOnly: true
 λx.x                     // Lambda Calculus
 function(x) { return x } // JavaScript

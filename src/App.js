@@ -103,7 +103,7 @@ class CodeBlockSegment extends Component {
     let buttons = null
     if(!this.props.segment.isReadOnly)
       buttons = <div className="buttons">
-        <button onClick={() => this.runTests()}>Run Tests (alt-enter)</button>
+        <button onClick={() => this.runTests()}>Save / Test (alt-enter)</button>
         <button onClick={() => this.reset()}>Reset (alt-r)</button>
       </div>
     return <div className="CodeBlock">
