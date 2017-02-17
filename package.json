@@ -57,8 +57,9 @@
   },
   "scripts": {
     "start": "node scripts/start.js",
-    "build": "node scripts/build.js",
+    "build": "npm run generate && node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom",
+    "generate": "babel-node lecture/generate.js",
     "deploy": "scp -r build/* pd@internetsfamo.us:lambda/"
   },
   "jest": {
