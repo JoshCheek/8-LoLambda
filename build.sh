@@ -3,4 +3,6 @@ set -eu
 set -o pipefail
 
 # Assumes Node/Npm are already installed
-npm install && npm start
+npm install && npm run build && npm start
+
+# Note: npm run deploy

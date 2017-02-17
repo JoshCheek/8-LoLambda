@@ -48,8 +48,11 @@ class MarkdownSegment extends Component {
 class CodeBlockSegment extends Component {
   constructor(props) {
     super(props)
-    // id, name?, body,
     const id = this.props.segment.id
+    let readOnly = false
+    if(!!this.props.segment.isReadOnly)
+      readOnly = 'nocursor'
+
     this.state = {
       code: this.props.appState.functions[id].body,
       // preserveScrollPosition: true,
@@ -62,9 +65,9 @@ class CodeBlockSegment extends Component {
         autofocus:          false,        // maybe provide this in the metadata?
         scrollbarStyle:     null,         // hide scrollbars
         cursorScrollMargin: 40,           // scrolls 2 lines before the edge
+        readOnly:           readOnly,
 
         // other maybe useful options:
-        // readOnly:      true,
         // keymap: ...,
         // extraKeys ...,
       },
