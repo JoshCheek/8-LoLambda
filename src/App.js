@@ -14,7 +14,6 @@ import 'codemirror/mode/javascript/javascript.js'
 
 
 class Navbar extends Component {
-  // <a className="PageLink" key={index} onClick={() => this.props.setPage(page)}>
   render() {
     return <div className="Navbar">{
       this.props.sections.map((sec, index) => this.linkFor(sec, index))
@@ -97,6 +96,7 @@ class CodeBlockSegment extends Component {
   }
 
   render() {
+    console.log(this.state.code)
     return <div className="CodeBlock">
       <CodeMirror
         value={this.state.code}
@@ -164,7 +164,7 @@ class Section extends Component {
   }
 
   render() {
-    const build = (seg, idx) => this.buildSegment(seg, idx)
+    const build = (seg, idx) => this.buildSegment(seg, `${seg.id}-${idx}`)
     return <div className="Section">
       {this.props.section.segments.map(build)}
     </div>
