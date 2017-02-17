@@ -59,10 +59,11 @@ function runTests(codeBlock, body) {
   //   "id": "__internal_id_11"
   // },
   saveCode(codeBlock.id, body)
+  codeBlock = Object.assign({}, codeBlock, {body: body})
   const tests = testsFor(codeBlock.id)
   tests.forEach(test => {
     setTimeout(() => {
-      const status = runTest(test, codeBlock, body)
+      const status = runTest(test, codeBlock)
       updateTestStatus(test.id, status)
       render()
     }, 0)
@@ -112,14 +113,10 @@ function testsFor(codeId) {
   return tests
 }
 
-function runTest(test, codeBlock, body) {
+function runTest(test, codeBlock) {
   // wrap the test and body in code to set the local variables
-  let code = ``
-  if(codeBlock.name)
-    code += `const ${codeBlock.name} = (${body})\n`
-  else
-    code += `${body}\n`
-  code += test.body
+  let code = wrapCode(codeBlock, test.body)
+  console.log(code)
 
   // eval the test and body to functions
   let status = {type: 'pending'}
@@ -143,4 +140,28 @@ function runTest(test, codeBlock, body) {
     if(expected === actual) return true
     throw new Error(`Expected ${testInspect(expected)} got ${testInspect(actual)}`)
   }
+}
+
+function wrapCode(codeBlock, toWrap) {
+  let codeBlockBody = state.functions[codeBlock.id].body
+  let wrapper = ``
+  if(codeBlock.name)
+    wrapper += `const ${codeBlock.name} = (${codeBlockBody})\n`
+  else
+    wrapper += `${codeBlockBody}\n`
+
+  return (codeBlock.needs||"").split(/ +/).filter(s => s.length).reduce((inner, depId) => {
+    return wrapCode(findSegment(depId), inner)
+  }, wrapper + toWrap)
+}
+
+function findSegment(id) {
+  for(let sec of state.sections) {
+    for(let seg of sec.segments) {
+      console.log(seg.id)
+      if(seg.id === id)
+        return seg
+    }
+  }
+  throw new Error(`Could not find segment ${id}`)
 }
