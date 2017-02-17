@@ -4,10 +4,9 @@ META name: What is a lambda?
 What is a lambda?
 -----------------
 
-In the lambda calculus, a lambda is a function. So if you know JavaScript
-or Ruby, then you already know what a lambda is!
-
-This expression in lambda calculus:
+A lambda is their word for a function. So if you know what a function is
+in JavaScript, or what a lambda / proc / block is in Ruby,
+then you already know what a lambda is!
 
 ```js
 META isReadOnly: true

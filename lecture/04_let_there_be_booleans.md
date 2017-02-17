@@ -5,8 +5,10 @@ Let there be booleans
 ---------------------
 
 So if we only have lambdas, how do we do things like if statements?
-Well, true and false are used to select between two options.
-So we'll give them those two options and let them each select from them.
+Well, everything must be a lambda, so true and false are lambdas.
+And since true and false are used to select between two options
+(a true case and a false case) we'll give them those two options
+and let them select the appropriate one.
 
 
 ```js
@@ -41,15 +43,18 @@ Now, lets write an if statement!
 
 ```js
 META id: firstIf
+META needs: firstBools
 // An if statement takes a boolean and the two bodies. It calls the boolean
 // with the two bodies, letting the boolean choose between them.
-function IF(boolean, trueCase, falseCase) { /* FIXME */ }
+function IF(boolean, trueCase, falseCase) {
+  return /* FIXME */
+}
 ```
 
 ```solution
 META for: firstIf
 function IF(boolean, trueCase, falseCase) {
-  return boolean(trueCase)(falseCase)
+  return boolean(trueCase, falseCase)
 }
 ```
 
