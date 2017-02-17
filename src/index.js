@@ -44,7 +44,7 @@ function saveCode(id, body) {
   render()
 }
 
-function runTests(codeId, body) {
+function runTests(codeBlock, body) {
   // { "type": "test",
   //   "status": {
   //     "type": "pending"
@@ -54,10 +54,11 @@ function runTests(codeId, body) {
   //   "body": "expect(TRUE(\"first\", \"second\")).toEqual(\"first\")",
   //   "id": "__internal_id_11"
   // },
-  testsFor(codeId).forEach(test =>
+  testsFor(codeBlock.id).forEach(test =>
     setTimeout(() => {
-      const result = runTest(test, body)
-      // FIXME: update the result
+      const result = runTest(test, codeBlock, body)
+      throw new Error('need to find and update the segment containing the test')
+      console.log("RESULT:", result)
       render()
     }, 0))
 }
@@ -72,13 +73,35 @@ function testsFor(codeId) {
   return tests
 }
 
-function runTest(test, body) {
+function runTest(test, codeBlock, body) {
   // wrap the test and body in code to set the local variables
+  let code = ``
+  if(codeBlock.name)
+    code += `const ${codeBlock.name} = (${body})\n`
+  else
+    code += `${body}\n`
+  code += test.body
+
   // eval the test and body to functions
-  // invoke the functions with the locals so they are available to the code
-  // invoke the test function with the body function
-  // catch errors (syntax and assertion)
-  // if no error, return passed status
-  // if error, return the description (eg syntax error vs failed assertion)
-  console.log(test, body)
+  let status = {type: 'pending'}
+  try {
+    eval(code)
+    status = {type: 'pass'}
+  } catch(err) {
+    status = {type: 'fail', message: err.message}
+  }
+  return status
+
+  function testInspect(val) {
+    if(typeof val === 'function')  return `(${val.toString()})`
+    if(typeof val === 'number')    return ``+val
+    if(typeof val === 'string')    return `'${val}'`
+    if(typeof val === 'undefined') return `undefined`
+    if(       val === null)        return `null`
+    throw new Error(`Cannot inspect the val b/c it's not one of the handfull of things I coded into this inspect function. Here's toString: ${val}`)
+  }
+  function assertEqual(expected, actual) {
+    if(expected === actual) return true
+    throw new Error(`Expected ${testInspect(expected)} got ${testInspect(actual)}`)
+  }
 }

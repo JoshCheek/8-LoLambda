@@ -27,13 +27,13 @@ function FALSE(trueCase, falseCase) { return falseCase }
 ```test
 META for:  firstBools
 META name: TRUE returns the first value
-expect(TRUE("first", "second")).toEqual("first")
+assertEqual("first", TRUE("first", "second"))
 ```
 
 ```test
 META for:  firstBools
 META name: FALSE returns the second value
-expect(TRUE("first", "second")).toEqual("first")
+assertEqual("second", FALSE("first", "second"))
 ```
 
 
@@ -58,8 +58,7 @@ META for:  firstIf
 META name: IF with a true boolean returns the true case
 META load: firstBools, firstIf
 
-let result = IF(TRUE,  'first', 'second')
-expect(result).toEqual('first')
+assertEqual('first', IF(TRUE,  'first', 'second'))
 ```
 
 ```test
@@ -67,6 +66,5 @@ META for:  firstIf
 META name: IF with a false boolean returns the false case
 META load: firstBools, firstIf
 
-let result = IF(FALSE,  'first', 'second')
-expect(result).toEqual('second')
+assertEqual('second', IF(FALSE,  'first', 'second'))
 ```

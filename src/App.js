@@ -86,7 +86,7 @@ class CodeBlockSegment extends Component {
   }
 
   runTests() {
-    this.props.runTests(this.segmentId(), this.state.code)
+    this.props.runTests(this.props.segment, this.state.code)
     // We should see the original status and after updating
     // them to pass, we should see that they pass (ie red to green,
     // hopefully with a helpful message)
