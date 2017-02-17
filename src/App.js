@@ -94,17 +94,20 @@ class CodeBlockSegment extends Component {
   }
 
   render() {
+    let buttons = null
+    if(!this.props.segment.isReadOnly)
+      buttons = <div className="buttons">
+        <button onClick={() => this.runTests()}>Run Tests</button>
+        <button onClick={() => this.saveCode(this.state.code)}>Save</button>
+        <button onClick={() => this.reset()}>Reset</button>
+      </div>
     return <div className="CodeBlock">
       <CodeMirror
         value={this.state.code}
         onChange={(code) => this.setCode(code)}
         options={this.state.options}
       />
-      <div className="buttons">
-        <button onClick={() => this.runTests()}>Run Tests</button>
-        <button onClick={() => this.saveCode(this.state.code)}>Save</button>
-        <button onClick={() => this.reset()}>Reset</button>
-      </div>
+      {buttons}
     </div>
   }
 }

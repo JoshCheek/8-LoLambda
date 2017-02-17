@@ -10,6 +10,7 @@ or Ruby, then you already know what a lambda is!
 This expression in lambda calculus:
 
 ```js
+META isReadOnly: true
 λx.x                     // Lambda Calculus
 function(x) { return x } // JavaScript
 lambda { |x| x }         // Ruby
