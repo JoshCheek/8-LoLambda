@@ -58,7 +58,9 @@ function runTests(codeBlock, body) {
   //   "body": "expect(TRUE(\"first\", \"second\")).toEqual(\"first\")",
   //   "id": "__internal_id_11"
   // },
-  testsFor(codeBlock.id).forEach(test => {
+  saveCode(codeBlock.id, body)
+  const tests = testsFor(codeBlock.id)
+  tests.forEach(test => {
     setTimeout(() => {
       const status = runTest(test, codeBlock, body)
       updateTestStatus(test.id, status)

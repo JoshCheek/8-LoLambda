@@ -66,12 +66,10 @@ class CodeBlockSegment extends Component {
         extraKeys: {
           // these should work for window and mac
           'Alt-Enter': cm => this.runTests(),
-          'Alt-S':     cm => this.saveCode(),
           'Alt-R':     cm => this.reset(),
 
           // since it's more common to use command on a mac, declare those keybindings, too
           'Cmd-Enter': cm => this.runTests(),
-          'Cmd-S':     cm => this.saveCode(),
           'Cmd-R':     cm => this.reset(),
         },
       },
@@ -106,7 +104,6 @@ class CodeBlockSegment extends Component {
     if(!this.props.segment.isReadOnly)
       buttons = <div className="buttons">
         <button onClick={() => this.runTests()}>Run Tests (alt-enter)</button>
-        <button onClick={() => this.saveCode()}>Save (alt-s)</button>
         <button onClick={() => this.reset()}>Reset (alt-r)</button>
       </div>
     return <div className="CodeBlock">
