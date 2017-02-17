@@ -88,5 +88,14 @@ $gutterColor: lighten($color1, 10%) // $color4 looks okay here, too
     margin-top: 0.3em
   &.pending
     background: #FB5
+  &.fail
+    background: #F55
+  &.pass
+    background: mix($color1, $myGreen)
   pre
     margin: 0
+  .message
+    font-size: 0.8em
+  hr
+    border: none
+    border-top: 1px solid $color4

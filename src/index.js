@@ -20,6 +20,7 @@ const root = document.getElementById('root')
 render()
 
 function render() {
+  window.state = state
   ReactDOM.render(
     <App
       appState={state}
@@ -54,13 +55,38 @@ function runTests(codeBlock, body) {
   //   "body": "expect(TRUE(\"first\", \"second\")).toEqual(\"first\")",
   //   "id": "__internal_id_11"
   // },
-  testsFor(codeBlock.id).forEach(test =>
+  testsFor(codeBlock.id).forEach(test => {
     setTimeout(() => {
-      const result = runTest(test, codeBlock, body)
-      throw new Error('need to find and update the segment containing the test')
-      console.log("RESULT:", result)
+      let segment, segmentIdx, section, sectionIdx
+
+      state.sections.forEach((sec, secIdx) => {
+        if(segment) return
+        sec.segments.forEach((seg, segIdx) => {
+          if(segment || seg.id !== test.id) return
+          section    = sec
+          sectionIdx = secIdx
+          segment    = seg
+          segmentIdx = segIdx
+        })
+      })
+
+      const status = runTest(test, codeBlock, body)
+
+      const newSeg = Object.assign({}, segment, {status})
+      const newSegments = []
+      section.segments.forEach(seg => newSegments.push(seg))
+      newSegments[segmentIdx] = newSeg
+
+      const newSec = Object.assign({}, section, {segments: newSegments})
+      const newSections = []
+      state.sections.forEach(sec => newSections.push(sec))
+      newSections[sectionIdx] = newSec
+
+      state = Object.assign({}, state, {sections: newSections})
+      console.log(state)
       render()
-    }, 0))
+    }, 0)
+  })
 }
 
 function testsFor(codeId) {

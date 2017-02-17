@@ -86,9 +86,6 @@ class CodeBlockSegment extends Component {
 
   runTests() {
     this.props.runTests(this.props.segment, this.state.code)
-    // We should see the original status and after updating
-    // them to pass, we should see that they pass (ie red to green,
-    // hopefully with a helpful message)
   }
 
   reset() {
@@ -96,7 +93,6 @@ class CodeBlockSegment extends Component {
   }
 
   render() {
-    console.log(this.state.code)
     return <div className="CodeBlock">
       <CodeMirror
         value={this.state.code}
@@ -121,22 +117,26 @@ class TestSegment extends Component {
     })
     return <div className={classes}>
       {this.renderName()}
+      {this.renderMessage()}
+      <hr />
       {this.renderCode()}
     </div>
   }
-
   renderName() {
     return <div>{this.props.segment.name}</div>
   }
+  renderMessage() {
+    const message = this.props.segment.status.message
+    if(message) return <div className="message">{message}</div>
+  }
   renderCode() {
-    // FIXME: toggle visibility and hilight?
+    // toggle visibility and hilight?
     return <pre>{this.props.segment.body}</pre>
   }
 }
 
 class Section extends Component {
   buildSegment(segProps, key) {
-    // console.log({omg: this.props.saveCode})
     switch(segProps.type) {
       case "md":
         return <MarkdownSegment key={key} segment={segProps} />
