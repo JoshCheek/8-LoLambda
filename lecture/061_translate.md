@@ -54,7 +54,7 @@ With the fat arrow, if we have a single expression
 ```js
 META id: e
 var TRUE  = (trueCase) => { return (falseCase) => trueCase  }
-var FALSE = (trueCase) => { return (falseCase) => { return trueCase  } }
+var FALSE = (trueCase) => { return (falseCase) => { return falseCase  } }
 ```
 
 Once more:
@@ -62,7 +62,7 @@ Once more:
 ```js
 META id: f
 var TRUE  = (trueCase) => (falseCase) => trueCase
-var FALSE = (trueCase) => { return (falseCase) => trueCase }
+var FALSE = (trueCase) => { return (falseCase) => falseCase }
 ```
 
 When there is only one argument, the fat arrow doesn't require parentheses
