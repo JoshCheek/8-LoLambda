@@ -8,7 +8,6 @@ So, after all of that, we have our final if statement :)
 
 ```js
 META id: finalIf
-META isReadOnly: true
 (TRUE => FALSE => IF => {
   console.log(IF(TRUE)(_=>"pass")(_=>"fail"))
   console.log(IF(FALSE)(_=>"fail")(_=>"pass"))

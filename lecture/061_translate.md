@@ -10,8 +10,6 @@ So lets amend our code to conform.
 Original:
 
 ```js
-META id: a
-META isReadOnly: true
 function TRUE(trueCase, falseCase)  { return trueCase  }
 function FALSE(trueCase, falseCase) { return falseCase }
 ```
@@ -21,7 +19,6 @@ so we need to assign them to variables instead.
 I've done it for true, you do it for false.
 
 ```js
-META id: b
 var TRUE = function(trueCase, falseCase)  { return trueCase  }
 function FALSE(trueCase, falseCase) { return falseCase }
 ```
@@ -32,7 +29,6 @@ This is known as "currying", yet another thing named after Haskell Curry.
 I've done it for true, you do it for false.
 
 ```js
-META id: c
 var TRUE  = function(trueCase) { return function(falseCase) { return trueCase  } }
 var FALSE = function(trueCase, falseCase) { return falseCase }
 ```
@@ -42,7 +38,6 @@ We remove `function` and add a fat arrow between the arguments and the body.
 Again, do it for false (going to stop saying this now).
 
 ```js
-META id: d
 var TRUE  = (trueCase) => { return (falseCase) => { return trueCase  } }
 var FALSE = function(trueCase) { return function(falseCase) { return falseCase } }
 ```
@@ -52,7 +47,6 @@ With the fat arrow, if we have a single expression
 `return`, it will then implicitly return like Ruby does.
 
 ```js
-META id: e
 var TRUE  = (trueCase) => { return (falseCase) => trueCase  }
 var FALSE = (trueCase) => { return (falseCase) => { return falseCase  } }
 ```
@@ -60,7 +54,6 @@ var FALSE = (trueCase) => { return (falseCase) => { return falseCase  } }
 Once more:
 
 ```js
-META id: f
 var TRUE  = (trueCase) => (falseCase) => trueCase
 var FALSE = (trueCase) => { return (falseCase) => falseCase }
 ```
@@ -69,7 +62,6 @@ When there is only one argument, the fat arrow doesn't require parentheses
 around the argument list.
 
 ```js
-META id: g
 var TRUE  = trueCase => falseCase => trueCase
 var FALSE = (trueCase) => (falseCase) => falseCase
 ```
@@ -78,7 +70,6 @@ The lambda calculus does not have assignment,
 variables can only be set by being received as arguments.
 
 ```js
-META id: h
 (TRUE => {
   var FALSE = trueCase => falseCase => falseCase
   // rest of the code would go here
@@ -88,7 +79,6 @@ META id: h
 That one's a bit tricky, here's what I wound up with in the end:
 
 ```js
-META id: i
 (TRUE => FALSE => // rest of the code would go here
 )(trueCase => falseCase => trueCase)
  (trueCase => falseCase => falseCase)

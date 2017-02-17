@@ -14,10 +14,10 @@ and let them select the appropriate one.
 ```js
 META id: firstBools
 
-// `true`  is a lambda that takes two values and returns the first,
-// `false` is a lambda that takes two values and returns the second.
-function TRUE(trueCase, falseCase)  { return /* FIXME */  }
-function FALSE(trueCase, falseCase) { return /* FIXME */ }
+// `true`  is a lambda (function) that takes two values and returns the first,
+// `false` is a lambda (function) that takes two values and returns the second.
+function TRUE(trueCase, falseCase)  { return /* EDIT HERE */  }
+function FALSE(trueCase, falseCase) { return /* EDIT HERE */ }
 ```
 
 ```solution
@@ -47,7 +47,7 @@ META needs: firstBools
 // An if statement takes a boolean and the two bodies. It calls the boolean
 // with the two bodies, letting the boolean choose between them.
 function IF(boolean, trueCase, falseCase) {
-  return /* FIXME */
+  return /* EDIT HERE */
 }
 ```
 

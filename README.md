@@ -1,3 +1,33 @@
+8-Lolambda
+==========
+
+Hosted at
+[https://internetsfamo.us/lambda](https://internetsfamo.us/lambda)
+
+Material about the lambda calculus for a talk I gave at 8th Light University.
+
+Notes to self for if I want to use it again at some point:
+
+* Keybindings to jump to the next code segment?
+* Keybindings to jump to next and previous pages?
+* Figure out how to get webpack to auto build the lecture.json when one of the markdown files is saved
+* Using the index as a key means it might think the elements are the same even
+  when they change.
+* The nested structure of the state is a pita to work with and leads to things like
+  conflation of data that defines things (eg test) and data that stores state
+  (eg test result)
+* On the "translate" page, it would be nice if it auto saved the code, but didn't
+  have the buttons (or if there were tests for them) (or if you just edited one
+  code block instead of jumping between them.
+* Test results do not persist their state (for the reason stated above)
+* How do they get out of having to forward a million arguments to every component?
+  (maybe this is what the redux libs do?)
+* Is there a shorthand to access props and state?
+* Why is it not running my `src/build_state.test.js` anymore? -.-
+
+Additional material I didn't get to:
+
+
 Representing Numbers
 --------------------
 
@@ -185,16 +215,6 @@ Y(recur => n => {
 
 ```
 
-
-----------------------
-
-* Maybe I do one big one, they do several small ones that add up to the big one?
-
-The way to create primitives in the lambda calculus is to ask what they are
-used for, and then make a lambda that does this. True and false are used to
-select between two options.
-
------
 
 Who made it?
 ------------
