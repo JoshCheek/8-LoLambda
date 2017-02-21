@@ -31,34 +31,6 @@ Additional material I didn't get to:
 Representing Numbers
 --------------------
 
-Alonzo Church came up with an encoding for numbers called "Church numerals"
-They're very similar to the `reduce` function that you may be familiar with.
-
-A number is a function (as everything is in the λ calculus).
-It receives a function to be run, and an input to run it on.
-It then runs the function with the input, some number of times.
-How many times? Well, that's what determines which number it is :)
-After each time it calls the function, it uses the output as the next input.
-
-So, assume the variables `n0, n1, ...` are church numerals for the given number.
-Then we could use them like this:
-
-```js
-n0(ary => ary.concat(ary.length))([])  // => []
-n1(ary => ary.concat(ary.length))([])  // => [0]
-n2(ary => ary.concat(ary.length))([])  // => [0, 1]
-n3(ary => ary.concat(ary.length))([])  // => [0, 1, 2]
-```
-
-And we could convert a Church numeral into it's JavaScript equivalent like this:
-
-```js
-n0(n => n+1)(0)  // => 0
-n1(n => n+1)(0)  // => 1
-n2(n => n+1)(0)  // => 2
-n3(n => n+1)(0)  // => 3
-```
-
 Define the numbers `n1` through `n3`. This is what I came up with:
 
 ```js
