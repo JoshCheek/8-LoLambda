@@ -9,7 +9,10 @@ const localStorageName = 'lambdaAppState'
 const rawLocalStorageState = localStorage.getItem(localStorageName)
 if(rawLocalStorageState) {
   const localStorageState = JSON.parse(rawLocalStorageState)
-  state.functions = Object.assign({}, state.functions, localStorageState.functions)
+  state.functions         = Object.assign({}, state.functions, localStorageState.functions)
+  const currentSection    = localStorageState.currentSection
+  if(currentSection)
+    state.currentSection  = currentSection
 }
 
 if(!state.currentSection) state.currentSection = state.sections[0].id
