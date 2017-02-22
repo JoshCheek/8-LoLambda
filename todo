@@ -3,19 +3,15 @@
   or change the material on "Translating our code" to
   be an explanation without blocks that they edit
   (then they can do the work on Final Booleans)
+* The names should be more obvious
+* Needs more attention paid to calling curried functions
+* If there is a solution, then add a button that fills the body in with the solution
+  (or maybe toggles it?)
+* Some shit cannot be copied -.- (code from the tests)
+* Maybe something which forces them to deal with explicitly thinking through the function calls?
 
-----  TODO  -----
-Go through the material I think is correct
-  making sure it is correct / I like it
-Add the next couple sections
-Maybe refine the material at that point
-
-Some code will depend on previous solutions,
-  some way (metadata) for them to declare what they depend on
-  some way to make it available to them
-
+----  MAYBE TODO  -----
 Keybindings for:
   Move to the next editor
-
 Assign the functions a name so that when we inspect them,
   we can see their name instead of having to look at their structure

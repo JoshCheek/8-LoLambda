@@ -8,6 +8,7 @@ Material about the lambda calculus for a talk I gave at 8th Light University.
 
 Notes to self for if I want to use it again at some point:
 
+* In terms of concrete stuff (eg I want to do this again), check the `todo` file
 * Keybindings to jump to the next code segment?
 * Keybindings to jump to next and previous pages?
 * Figure out how to get webpack to auto build the lecture.json when one of the markdown files is saved
