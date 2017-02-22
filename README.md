@@ -32,19 +32,6 @@ Additional material I didn't get to:
 Representing Numbers
 --------------------
 
-Define the numbers `n1` through `n3`. This is what I came up with:
-
-```js
-var n0 = f => arg => arg
-var n1 = f => arg => n0(f)(f(arg))
-var n2 = f => arg => n1(f)(f(arg))
-var n3 = f => arg => n2(f)(f(arg))
-```
-
-Now, it's annoying to have to define every number you might ever want to use,
-and we can see that their structure is repetative, so to ease this, why don't
-you creat an `inc` function, which takes a number and increments it.
-Ie `inc(n0) // => n1`.  This is what I came up with:
 
 ```js
 var inc = n => f => arg => n(f)(f(arg))
