@@ -1,5 +1,8 @@
-* mention in the conclusion that I've got extras
 * read-only code blocks should have a different bg color
+* Either add auto-saved blocks that don't have buttons
+  or change the material on "Translating our code" to
+  be an explanation without blocks that they edit
+  (then they can do the work on Final Booleans)
 
 ----  TODO  -----
 Go through the material I think is correct
