@@ -32,7 +32,7 @@ var n3 = f => arg => f(n2(f)(arg))
 
 Now, it's annoying to have to define every number you might ever want to use,
 and we can see that their structure is repetative. So to ease this, why don't
-you creat a `succ` function, which takes a number and returns its successor
+you create a `succ` function, which takes a number and returns its successor
 (increments it). For example, `succ(n0) // => n1`.
 
 
@@ -43,7 +43,8 @@ YOUR_CODE_HERE
 ```
 
 ```solution
-f => arg => n0(f)(f(arg))
+META for: succ
+n => f => arg => n(f)(f(arg))
 ```
 
 ```test

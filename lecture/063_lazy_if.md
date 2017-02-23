@@ -26,21 +26,21 @@ But nothing should ever be done with that lambda,
 so we can use an empty lambda for it.
 
 ```js
-META id: ifLazy
+META id: if
 META name: IF
 boolean => trueCase => falseCase =>
   boolean(trueCase)(falseCase)
 ```
 
 ```test
-META for:  ifLazy
+META for:  if
 META name: TRUE returns the first value
 META needs: true false
 assertEqual('first', IF(TRUE)(_=>"first")(_=>"second"))
 ```
 
 ```test
-META for:  ifLazy
+META for:  if
 META name: FALSE returns the second value
 META needs: true false
 assertEqual('second', IF(FALSE)(_=>"first")(_=>"second"))
