@@ -148,7 +148,6 @@ function runTest(test, codeBlock) {
 function wrapCode(codeBlock, toWrap) {
   let codeBlockBody = state.functions[codeBlock.id].body
   let wrapper = ``
-	console.log(codeBlock)
   if(codeBlock.name)
     wrapper += `const ${codeBlock.name} = (${codeBlockBody})\n`
   else
@@ -162,7 +161,6 @@ function wrapCode(codeBlock, toWrap) {
 function findSegment(id) {
   for(let sec of state.sections) {
     for(let seg of sec.segments) {
-      console.log(seg.id)
       if(seg.id === id)
         return seg
     }

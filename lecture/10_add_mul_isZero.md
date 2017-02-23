@@ -54,6 +54,7 @@ If you get confused, think through the interface implied by that statement.
 ```js
 META id: add
 META name: add
+META needs: succ
 ```
 
 ```solution
@@ -103,5 +104,62 @@ Mul
 ---
 
 If we think of multiplication as repeated addition,
-we can see that two groups of 3 gives us 12,
-and 3 groups of
+then `2*3` is `0+2+2+2` or `0+3+3`, so we can define
+multiplication in terms of addition.
+
+The solution to this is horribly inefficient,
+don't let that prevent you from finding the solution :)
+
+```js
+META id: mul
+META name: mul
+META needs: add isZero
+```
+
+```solution
+META for: mul
+nA => nB => nA(n => add(n)(nB))(n0)
+```
+
+```test
+META for: mul
+META name: 0*1=0
+META needs: n4
+assertEqual(0, mul(n0)(n1)(n => n + 1)(0))
+```
+```test
+META for: mul
+META name: 1*0=0
+META needs: n4
+assertEqual(0, mul(n1)(n0)(n => n + 1)(0))
+```
+```test
+META for: mul
+META name: 1*1=1
+META needs: n4
+assertEqual(1, mul(n1)(n1)(n => n + 1)(0))
+```
+```test
+META for: mul
+META name: 1*2=2
+META needs: n4
+assertEqual(2, mul(n1)(n2)(n => n + 1)(0))
+```
+```test
+META for: mul
+META name: 2*1=2
+META needs: n4
+assertEqual(2, mul(n2)(n1)(n => n + 1)(0))
+```
+```test
+META for: mul
+META name: 2*3=6
+META needs: n4
+assertEqual(6, mul(n2)(n3)(n => n + 1)(0))
+```
+```test
+META for: mul
+META name: 3*2=6
+META needs: n4
+assertEqual(6, mul(n3)(n2)(n => n + 1)(0))
+```

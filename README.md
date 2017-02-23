@@ -32,13 +32,7 @@ Additional material I didn't get to:
 Representing Numbers
 --------------------
 
-
-```js
-var inc = n => f => arg => n(f)(f(arg))
-```
-
-Go ahead and define `add`, `mul`, `isZero`, `areEqual`.
-Now define `pred`, which returns `0` if the number is zero,
+`areEqual` Now define `pred`, which returns `0` if the number is zero,
 and `n-1` otherwise.
 For extra credit, define `sub` (this one took some thinking).
 
