@@ -137,6 +137,8 @@ function runTest(test, codeBlock) {
     if(typeof val === 'string')    return `'${val}'`
     if(typeof val === 'undefined') return `undefined`
     if(       val === null)        return `null`
+    if(       val === true)        return `true`
+    if(       val === false)       return `false`
     throw new Error(`Cannot inspect the val b/c it's not one of the handfull of things I coded into this inspect function. Here's toString: ${val}`)
   }
   function assertEqual(expected, actual) {
