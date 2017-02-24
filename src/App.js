@@ -47,7 +47,7 @@ class CodeBlockSegment extends Component {
     const id = this.props.segment.id
     let readOnly = false
     if(!!this.props.segment.isReadOnly)
-      readOnly = 'nocursor'
+      readOnly = true
 
     this.state = {
       code: this.props.appState.functions[id].body,
@@ -99,6 +99,11 @@ class CodeBlockSegment extends Component {
   }
 
   render() {
+    const classes = classNames({
+      CodeBlock: true,
+      readOnly: this.state.options.readOnly,
+    })
+
     const kb = name => this.keybindings[name].toLowerCase()
     let buttons = null
     if(!this.props.segment.isReadOnly)
@@ -106,7 +111,8 @@ class CodeBlockSegment extends Component {
         <button onClick={() => this.runTests()}>Save / Test (alt-enter)</button>
         <button onClick={() => this.reset()}>Reset (alt-r)</button>
       </div>
-    return <div className="CodeBlock">
+
+    return <div className={classes}>
       <CodeMirror
         value={this.state.code}
         onChange={(code) => this.setCode(code)}
@@ -147,11 +153,11 @@ class TestSegment extends Component {
       value={this.props.segment.body}
       onChange={(code) => this.setCode(code)}
       options={{
-        lineNumbers:        true,
-          mode:               "javascript",
-          theme:              'solarized',
-          autofocus:          false,
-          readOnly:           'nocursor',
+        lineNumbers:  true,
+          mode:       "javascript",
+          theme:      'solarized',
+          autofocus:  false,
+          readOnly:   true,
         }}
       />
     </div>
@@ -198,10 +204,9 @@ class Section extends Component {
 class App extends Component {
   render() {
     const appState = this.props.appState
-    let current = appState.sections.find(sec => sec.id === appState.currentSection)
-    if(!current)
-      current = appState.sections[0]
-    // current = appState.sections.find(sec => sec.id === "letThereBeBooleans")
+    const current =
+      appState.sections.find(sec => sec.id === appState.currentSection) ||
+      appState.sections[0]
 
     return <div className="App">
       <Navbar sections={appState.sections} current={current} setCurrent={this.props.setCurrent} />

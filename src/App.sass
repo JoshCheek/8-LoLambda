@@ -69,6 +69,9 @@ $gutterColor: lighten($color1, 10%) // $color4 looks okay here, too
     &:focus
       outline-color: mix($color1, $myGreen)
 
+.readOnly .ReactCodeMirror .CodeMirror-gutters .CodeMirror-gutter
+  background-color: mix($gutterColor, #000)
+
 .ReactCodeMirror
   // Lets it grow until it hits some max size (about 20 lines)
   .CodeMirror

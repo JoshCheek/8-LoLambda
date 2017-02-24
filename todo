@@ -1,4 +1,3 @@
-* read-only code blocks should have a different bg color
 * Either add auto-saved blocks that don't have buttons
   or change the material on "Translating our code" to
   be an explanation without blocks that they edit
@@ -7,7 +6,6 @@
 * Needs more attention paid to calling curried functions
 * If there is a solution, then add a button that fills the body in with the solution
   (or maybe toggles it?)
-* Some shit cannot be copied -.- (code from the tests)
 * Maybe something which forces them to deal with explicitly thinking through the function calls?
 
 ----  MAYBE TODO  -----
