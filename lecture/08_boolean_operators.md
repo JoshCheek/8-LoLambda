@@ -97,7 +97,6 @@ Implement OR in the lambda calculus
 META id: or
 META name: OR
 META needs: and
-b1 => b2 => b1(b1)(b2)
 ```
 
 ```solution
@@ -138,9 +137,7 @@ and it returns true when they are not equal.
 META id: xor
 META name: XOR
 META needs: or
-/* FIXME (prefilling it a bit so its clear you can use multiple lines :) */
-b1 => b2 =>
-  OR(b1)(b2)
+/* remember that you can use multiple lines */
 ```
 
 ```solution

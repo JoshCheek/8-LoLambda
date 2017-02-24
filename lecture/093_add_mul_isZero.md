@@ -59,7 +59,8 @@ META needs: succ
 
 ```solution
 META for: add
-nA => nB => f => arg => nA(f)(nB(f)(arg))
+na => nb =>
+  na(succ)(nb)
 ```
 
 ```test
@@ -118,7 +119,8 @@ META needs: add isZero
 
 ```solution
 META for: mul
-nA => nB => nA(n => add(n)(nB))(n0)
+na => nb =>
+  na(add(nb))(n0)
 ```
 
 ```test
