@@ -74,4 +74,5 @@ assertEqual('second', IF(FALSE,  'first', 'second'))
 In object oriented programming, we might call this idea
 "polymorphism", the `boolean` can be `TRUE` or `FALSE`,
 which have different behaviour, but perform the task
-of being a boolean based on what's appropriate for their value.
+of being a boolean based on how we talk to it,
+and what it's role is.

@@ -4,7 +4,7 @@ META name: Why it's interesting
 Why the lambda calculus is interesting
 --------------------------------------
 
-Haskell made me a determinist.
+Haskell (which was named after Haskell Curry) made me a determinist.
 All my logic was leading to something like that, but I couldn't conceive of
 how it was able to explain what I perceived as free will.
 Once I played with Haskell, I saw that things which appear to change

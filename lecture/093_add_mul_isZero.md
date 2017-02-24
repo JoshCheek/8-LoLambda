@@ -1,8 +1,7 @@
 META id: addMulisZero
 META name: Extra: isZero, add, mul
 
-isZero
-------
+### isZero
 
 The `isZero` function returns true if you give it zero, false otherwise.
 You'll have access to your earlier definitions through the names `TRUE` and `FALSE`.
@@ -44,8 +43,7 @@ assertEqual(false, toBool(isZero(n2)))
 ```
 
 
-Add
----
+### Add
 
 The `add` function takes two numbers and returns the number that is their sum.
 If you get confused, think through the interface implied by that statement.
@@ -101,8 +99,7 @@ assertEqual("xxxoxxx", add(n1)(n2)(c => "x"+c+"x")("o"))
 ```
 
 
-Mul
----
+### Mul
 
 If we think of multiplication as repeated addition,
 then `2*3` is `0+2+2+2` or `0+3+3`, so we can define

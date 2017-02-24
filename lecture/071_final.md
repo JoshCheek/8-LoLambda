@@ -5,6 +5,8 @@ Conclusion
 ----------
 
 So, after all of that, we have our final if statement!
+You can copy it into a file
+and then run that file with node.
 If our booleans work correctly, then it will print "PASS"
 twice!
 

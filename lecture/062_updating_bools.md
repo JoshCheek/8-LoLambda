@@ -4,7 +4,8 @@ META name: Updating our bools
 Updating our bools
 ------------------
 
-So translate this definition of true in the same way we just did.
+So translate this definition of true in the same way we just did
+(swap it for a curried fat arrow function).
 
 ```js
 META id: true

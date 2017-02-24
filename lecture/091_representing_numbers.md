@@ -9,7 +9,7 @@ Alonzo Church came up with an encoding for numbers called "Church numerals"
 They're very similar to the `reduce` function that you may be familiar with.
 
 A number is a function (as everything is in the λ calculus).
-It receives a function to be run, and an input to run it on.
+**It receives a function to be run, and an input to run it on.**
 It then runs the function with the input, some number of times.
 How many times? Well, that's what determines which number it is :)
 After each time it calls the function, it uses the output as the next input.
@@ -44,7 +44,7 @@ Go ahead and define n0. This one should be very straight forward.
 ```js
 META id: n0
 META name: n0
-/* Code for number 0, available in the future as n0 */
+// Code for number 0, available in the future as n0
 f => arg => EDIT_HERE
 ```
 
@@ -74,7 +74,7 @@ And n1
 META id: n1
 META name: n1
 META needs: n0
-/* DEFINE n1 HERE, you do have access to your definition of n0 */
+// Code for number 1, available in the future as n1
 ```
 
 ```test
@@ -105,7 +105,7 @@ The best way to do this one is to define it in terms of n1.
 META id: n2
 META name: n2
 META needs: n1
-/* DEFINE n2 HERE, you do have access to your definition of n1 */
+// Code for number 2, available in the future as n2
 ```
 
 ```test
@@ -136,7 +136,7 @@ The best way to do this one is to define it in terms of n2.
 META id: n3
 META name: n3
 META needs: n2
-/* DEFINE n3 HERE, you do have access to your definition of n2 */
+// Code for number 3, available in the future as n3
 ```
 
 ```test
@@ -167,7 +167,7 @@ The best way to do this one is to define it in terms of n2.
 META id: n4
 META name: n4
 META needs: n3
-/* DEFINE n4 HERE, you do have access to your definition of n3 */
+// Code for number 4, available in the future as n4
 ```
 
 ```test

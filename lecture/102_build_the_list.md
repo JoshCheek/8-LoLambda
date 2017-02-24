@@ -6,15 +6,13 @@ Build our lists
 
 * Our linked list will be a chain of "nodes".
 * A node will store three values:
-  1. A boolean we can use to ask if the node is empty
+  1. A boolean to tell us if the node is empty
   2. A piece of data (often called the "head", "first", or "car")
   3. A link to the next node (often called the "tail", "rest", or "cdr")
-* Our empty list will
-  * return dynamite for the data (the list is empty, you can't ask for its value and then use it!)
-  * Return the empty list for its successor.
-    For now, we'll cheat by using `var` to have it reference itself.
-    We can come back and fix this once we have a Y combinator, which will allow
-    for self reference :)
+* Our empty list will call the decider (see the previous section) with
+  * True to say it is empty
+  * A throwaway list for the data (it has no data)
+  * A throwaway list for the next node (it has no next node)
 
 You'll need to edit several of these together for our tests to work.
 

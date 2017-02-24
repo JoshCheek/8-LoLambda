@@ -5,4 +5,4 @@ Definition of the lambda calculus
 ---------------------------------
 
 So the lambda calculus, then,
-is just a way to reason about a programming with lambdas.
+is just a way to reason about programming with lambdas.

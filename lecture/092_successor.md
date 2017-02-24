@@ -44,7 +44,9 @@ YOUR_CODE_HERE
 
 ```solution
 META for: succ
-n => f => arg => n(f)(f(arg))
+n =>
+  f => arg =>
+    n(f)(f(arg))
 ```
 
 ```test

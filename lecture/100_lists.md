@@ -15,8 +15,7 @@ to the next node. The very last node is called the "empty list".
 This structure is very natural in functional programming,
 in fact, they added some syntax and convenience to the lambda
 calculus in order to make a language that had first class
-list processing. This language that did **LIS**t **P**rocessing,
-was eventually namedd lisp!
+**LIS**t **p**rocessing, which was eventually namedd lisp!
 
 Here is one way we might implement a list using JavaScript objects:
 

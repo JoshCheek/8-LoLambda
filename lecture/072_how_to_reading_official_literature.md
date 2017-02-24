@@ -51,11 +51,12 @@ const double = x => x + x
   * "free" variables, a variable that comes from a function's context.
 
   They make these distinctions because it's a macro language,
-  so they have to substitute function bodies into their call sites.
+  so they have to substitute function bodies into their call sites
+  as strings or ASTs.
   This could lead to collision of names, so they may need to do renaming,
   and you rename free variables differently from bound ones.
 * When we say "call the function",
   they say "apply the function to its arguments".
-  We think of the call site as being the actor because it runs the function,
-  but they think of the function as being the actor because it changes the code
-  at the call site.
+  We think of the call site as being the actor because it calls the function,
+  but they think of the function as being the actor because it applies itself
+  to the code at the call site.

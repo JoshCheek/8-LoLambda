@@ -4,13 +4,17 @@ META name: Extra: Boolean operators
 Boolean Operators
 -----------------
 
+### not
+
 `NOT` takes a boolean and returns a boolean.
 
 ```js
 META id: not
 META name: NOT
 META needs: true false if
-bool => TRUE
+// I've put a little bit in place to reduce size of this step
+// go ahead and run it to see what's wrong with this definition
+bool => TRUE(bool)(bool)
 ```
 
 ```solution
@@ -32,6 +36,7 @@ assertEqual(true, result(true)(false))
 ```
 
 
+### and
 
 `AND` is an operator that takes two booleans.
 If the first is false, it returns first.
@@ -91,12 +96,16 @@ const result = AND(TRUE)(TRUE)
 assertEqual(true, result(true)(false))
 ```
 
+### or
+
 Implement OR in the lambda calculus
 
 ```js
 META id: or
 META name: OR
 META needs: and
+// less hand-holding here, now you need to think about
+// the signature in order to define it!
 ```
 
 ```solution
@@ -130,14 +139,19 @@ const result = OR(TRUE)(TRUE)
 assertEqual(true, result(true)(false))
 ```
 
+### xor
+
 Implement XOR in the lambda calculus. Xor stands for "exclusive or",
-and it returns true when they are not equal.
+and it returns true when they are not equal. If you get stuck on this one,
+just skip it and move on :)
 
 ```js
 META id: xor
 META name: XOR
 META needs: or
-/* remember that you can use multiple lines */
+// This one was pretty tricky for me, remember that you can use
+// multiple lines (helps with readability), and you can use
+// AND, OR, and NOT, from your definitions above.
 ```
 
 ```solution

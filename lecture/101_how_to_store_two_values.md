@@ -50,12 +50,7 @@ whichever one it wants!
 ```js
 META id: storeTwo3
 META isReadOnly: true
-(store => {
-    const lc = store("lambda")("calculus")
-    lc(first => second => first)  // => "lambda"
-    lc(first => second => second) // => "calculus"
-  }
-)(
+const store =
   // Take our two values we want to store
   first => second =>
     // To get them back out, provide a decider
@@ -63,5 +58,8 @@ META isReadOnly: true
       // Here, decider, you decide, and I'll return
       // the one you give back to me!
       decider(first)(second)
-)
+
+const lc = store("lambda")("calculus")
+console.log(lc(first => second => first))  // => "lambda"
+console.log(lc(first => second => second)) // => "calculus"
 ```
