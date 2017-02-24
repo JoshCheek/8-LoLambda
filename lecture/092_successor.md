@@ -38,7 +38,7 @@ you create a `succ` function, which takes a number and returns its successor
 
 ```js
 META id: succ
-META name: succ
+META name: SUCC
 YOUR_CODE_HERE
 ```
 
@@ -53,28 +53,28 @@ n =>
 META for: succ
 META name: The successor of 0 is 1
 META needs: n0
-assertEqual(1, succ(n0)(n => n+1)(0))
+assertEqual(1, SUCC(n0)(n => n+1)(0))
 ```
 
 ```test
 META for: succ
 META name: The successor of the successor of 0 is 2
 META needs: n0
-assertEqual(2, succ(succ(n0))(n => n+1)(0))
+assertEqual(2, SUCC(SUCC(n0))(n => n+1)(0))
 ```
 
 ```test
 META for: succ
 META name: The third successor of 2 is 3
 META needs: n2
-assertEqual(3, succ(n2)(n => n+1)(0))
+assertEqual(3, SUCC(n2)(n => n+1)(0))
 ```
 
 ```test
 META for: succ
 META name: The 10th successor of 0 is 10
 META needs: n0
-var n = succ(succ(succ(succ(succ(succ(succ(succ(succ(succ(n0))))))))))
+var n = SUCC(SUCC(SUCC(SUCC(SUCC(SUCC(SUCC(SUCC(SUCC(SUCC(n0))))))))))
 assertEqual(10, n(n => n+1)(0))
 ```
 

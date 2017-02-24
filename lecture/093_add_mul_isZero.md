@@ -58,7 +58,7 @@ META needs: succ
 ```solution
 META for: add
 na => nb =>
-  na(succ)(nb)
+  na(SUCC)(nb)
 ```
 
 ```test
