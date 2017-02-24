@@ -6,8 +6,15 @@ How the lambda calculus works
 
 Alright, the lambda calculus has four things in it:
 
-1. **functions** these take inputs and return an output
-  (they call this a "lambda abstractions")
-2. **variables** names a function can use to reference its arguments
-3. **function calls** so that you can run the function! (called an "application")
-4. **parentheses** for grouping (eg the same way you would use parens to change the order of operations in a math equation)
+1. **functions** take inputs and return an output
+2. **variables** are names a function can use to reference
+   its arguments.
+3. **function calls** give the arguments values and then run
+   the expression in the body.
+4. **parentheses** let us group things together,
+   the same way we might use them in mathematics.
+
+It's worth memorizing these things to help you remember that
+if it's not in this list, then it does not exist. The value of
+that realization is that it significantly limits your search
+space as you try to find solutions to the challenges ahead.

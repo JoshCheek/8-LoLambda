@@ -16,7 +16,7 @@ META id: firstBools
 
 // `true`  is a lambda (function) that takes two values and returns the first,
 // `false` is a lambda (function) that takes two values and returns the second.
-function TRUE(trueCase, falseCase)  { return /* EDIT HERE */  }
+function TRUE(trueCase, falseCase)  { return /* EDIT HERE */ }
 function FALSE(trueCase, falseCase) { return /* EDIT HERE */ }
 ```
 
@@ -39,13 +39,14 @@ assertEqual("second", FALSE("first", "second"))
 ```
 
 
-Now, lets write an if statement!
+Now, lets write an if statement! The **key realization**
+here is that `boolean` is either `TRUE` or `FALSE`
+and whichever one it is it, it will do the correct thing.
 
 ```js
 META id: firstIf
 META needs: firstBools
-// An if statement takes a boolean and the two bodies. It calls the boolean
-// with the two bodies, letting the boolean choose between them.
+// Delegate the work to the boolean
 function IF(boolean, trueCase, falseCase) {
   return /* EDIT HERE */
 }
@@ -61,15 +62,16 @@ function IF(boolean, trueCase, falseCase) {
 ```test
 META for:  firstIf
 META name: IF with a true boolean returns the true case
-META needs: firstBools firstIf
-
 assertEqual('first', IF(TRUE,  'first', 'second'))
 ```
 
 ```test
 META for:  firstIf
 META name: IF with a false boolean returns the false case
-META needs: firstBools firstIf
-
 assertEqual('second', IF(FALSE,  'first', 'second'))
 ```
+
+In object oriented programming, we might call this idea
+"polymorphism", the `boolean` can be `TRUE` or `FALSE`,
+which have different behaviour, but perform the task
+of being a boolean based on what's appropriate for their value.

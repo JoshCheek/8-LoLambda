@@ -1,8 +1,8 @@
-META id: finalBools
-META name: Final booleans
+META id: updatingBools
+META name: Updating our bools
 
-Final booleans
---------------
+Updating our bools
+------------------
 
 So translate this definition of true in the same way we just did.
 

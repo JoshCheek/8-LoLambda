@@ -4,16 +4,13 @@ META name: Why it's interesting
 Why the lambda calculus is interesting
 --------------------------------------
 
-IDK if this is real, but I like to think the lambda calculus and the turing
-machine as giving rise to two different branches of programming.
+Haskell made me a determinist.
+All my logic was leading to something like that, but I couldn't conceive of
+how it was able to explain what I perceived as free will.
+Once I played with Haskell, I saw that things which appear to change
+can be explained in a world that doesn't.
 
-The turing machine leads to procedural languages, where the programmer
-specifies the instructions that the machine should perform.
-
-The lambda calculus leads to functional languages, where the programmer uses a
-declarative mathematical notation to reason about a problem.
-
-So if you like Clojure, Haskell, ML, and Elm, well their foundation is the
-lambda calculus. Even if not, it's worth playing with because ideas from the
-lambda calculus have permeated most languages at this point. For instance,
-we've already shown their prevalence in JavaScript and Ruby.
+The lambda calculus is underpinnings of Haskell and all the other
+functional programming languages. Lisps like Clojure, and Scheme
+(the language of SICP) are also functional and are thus based on the ideas
+in the lambda calculus.

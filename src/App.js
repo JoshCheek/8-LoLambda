@@ -198,7 +198,9 @@ class Section extends Component {
 class App extends Component {
   render() {
     const appState = this.props.appState
-    let current  = appState.sections.find(sec => sec.id === appState.currentSection)
+    let current = appState.sections.find(sec => sec.id === appState.currentSection)
+    if(!current)
+      current = appState.sections[0]
     // current = appState.sections.find(sec => sec.id === "letThereBeBooleans")
 
     return <div className="App">

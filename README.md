@@ -32,9 +32,8 @@ Additional material I didn't get to:
 Representing Numbers
 --------------------
 
-`areEqual` Now define `pred`, which returns `0` if the number is zero,
-and `n-1` otherwise.
-For extra credit, define `sub` (this one took some thinking).
+`pred` returns `0` if the number is zero, and `n-1` otherwise.
+`areEqual` for extra credit, define `sub` (this one took some thinking).
 
 For extra extra credit, define `divide` which performs integer division
 (truncates remainders). If multiplication is repeated addition,
@@ -54,55 +53,6 @@ is larger than the dividend. eg:
 
 Linked Lists
 ------------
-
-To represent a collection, we will use a data structure known as a linked list.
-We will modifiy our slightly, as a consequence of the constraints of the lambda
-calculus (ie because it doesn't have a `null` pointer).
-
-* Our linked list will be a chain of "nodes".
-* A node will store three values:
-  1. A boolean we can use to ask if the node is empty
-  2. A piece of data (often called the "head", "first", or "car")
-  3. A link to the next node (often called the "tail", "rest", or "cdr")
-* Our empty list will
-  * return dynamite for the data (the list is empty, you can't ask for its value and then use it!)
-  * Return the empty list for its successor.
-    For now, we'll cheat by using `var` to have it reference itself.
-    We can come back and fix this once we have a Y combinator, which will allow
-    for self reference :)
-
-We might represent the list with arrays like this:
-
-```js
-// construct an empty list
-var EMPTY_LIST = null
-
-// check if the node is the empty list
-var IS_EMPTY   = node => node === null
-var HAS_ANY    = node => !IS_EMPTY(node)
-
-// construct a non-empty list
-var CONS  = head => tail => [head, tail]
-
-// get the list's data
-var DATA = node => node[0]
-
-// get the next node in the list
-var NEXT = node => node[1]
-
-// iterate over these three items and print them out
-var node = CONS(1)(
-           CONS(2)(
-           CONS(3)(
-           EMPTY_LIST)))
-while(HAS_ANY(node)) {
-  console.log(DATA(node))
-  node = NEXT(node)
-}
-```
-
-
-So, we need to make definitions for the functions above:
 
 ```js
 let TRUE       = t => f => t
