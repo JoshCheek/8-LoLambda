@@ -1,9 +1,3 @@
-# Cloned some of the libs into here for reference
-tmp
-
-# Opal compiled into a file
-opal_app.js
-
 # JavaScript deps
 node_modules
 
