@@ -1,0 +1,78 @@
+<!doctype html>
+
+<!-- METADATA -->
+<meta charset="utf-8">
+<title>JS and Ruby in the browser (template)</title>
+
+<!-- LOAD DEPENDENCIES -->
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"
+        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        crossorigin="anonymous"></script>
+
+
+<script src="bower_components/codemirror/lib/codemirror.js"></script>
+<script src="bower_components/codemirror/mode/xml/xml.js"></script>
+<link rel="stylesheet" type="text/css" href="bower_components/codemirror/lib/codemirror.css">
+<link rel=stylesheet href="bower_components/codemirror/theme/base16-light.css">
+
+
+<!-- TOSS SOME STYLES UP IN HERE! -->
+<style>
+body {
+  margin:        3em;
+  margin-bottom: 5em;
+  font-size:     1.5em;
+}
+/* cm is the text editor, Code Mirror */
+.cm {
+  border:  2px solid blue;
+  display: block;
+  width:   50%;
+}
+</style>
+
+
+<form action="/" method="post" accept-charset="utf-8">
+  <p>
+    <label for="email">Email</label>
+    <input type="text" name="user_email" id="email" value="<%= @email %>">
+    </input>
+  </p>
+
+  <p>
+    <label for="pass">Password</label>
+    <input type="password" name="user_password" id="pass" value="<%= @pass %>">
+    </input>
+  </p>
+
+  <p>
+    <label for="order">Order Number</label>
+    <input type="text" name="order_number" id="order" value="<%= @order_no %>">
+    </input>
+  </p>
+
+  <p><input type="submit" value="Find Order"></p>
+</form>
+
+<textarea class="cm"></textarea>
+<button id="ship-notification">Ship Notification</button>
+
+<script type="text/javascript">
+var dom = document.querySelector('.cm')
+var cm  = CodeMirror.fromTextArea(dom, {
+  mode:        "xml",
+  lineNumbers: true,
+  theme:       'base16-light',
+})
+cm.setValue(<%= @xml.to_s.inspect %>)
+window.cm = cm
+
+
+var shipNotification = document.querySelector('#ship-notification')
+shipNotification.onclick = function() {
+  var data = cm.getValue()
+  $.post('/ship-notification', {data: data}, function(data, status) {
+    cm.setValue("")
+  })
+}
+</script>
